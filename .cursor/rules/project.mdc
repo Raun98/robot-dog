@@ -8,6 +8,6 @@ alwaysApply: true
 - This repo is in **planning (Phase 0)** unless `docs/build-phases/` says otherwise.
 - Read `AGENTS.md`, `docs/architecture/README.md`, and `docs/decisions/` before proposing parts or code.
 - Canonical parts list is `bom/bom.csv`. Never add a part only in prose.
-- Compute is fixed: Pi 5 8 GB + AI HAT+ 26 TOPS. Motion: v1 is 12× MG995 + PCA9685; ST3215/STS3215 deferred (ADR-0002).
+- Hardware freeze: ADR-0004. Compute Pi 5 + AI HAT+. Motion 12× MG995 + PCA9685 + ESP32-S3. ST3215/clones rejected.
 - If architecture changes, add or update an ADR in the same change.
 - Do not invent walking firmware, CAD, or a second HAT stacked on the AI HAT+.

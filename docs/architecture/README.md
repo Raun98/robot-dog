@@ -1,19 +1,18 @@
 # Architecture
 
-Working assumption until a new ADR says otherwise. Compute is fixed ([ADR-0001](../decisions/0001-compute.md)). Motion split is [ADR-0002](../decisions/0002-motion-stack.md).
+Working assumption: [ADR-0004](../decisions/0004-hardware-freeze.md) (stack) and [ADR-0001](../decisions/0001-compute.md) (compute). Motion history: [ADR-0002](../decisions/0002-motion-stack.md).
 
 ## Block diagram
 
 ```text
-[CSI camera] --> [Pi 5 + AI HAT+ Hailo] --> behavior (see, hear, decide)
-[USB/I2S mic] --> [Pi 5 CPU / optional Hailo] --/
-                      |
-                      | USB-serial or UART (commands + telemetry)
-                      v
-              [motion MCU] --> [PCA9685 + 12x MG995 (v1)]
-                      ^
-                      |
-              [IMU MPU-6050]   [ACS712]   [e-stop]
+[Camera Module 3 CSI] --> [Pi 5 + AI HAT+] --> behavior
+[USB mic] --------------^
+        USB-serial
+            v
+[ESP32-S3] --I2C + level shift--> [PCA9685] --> 12x MG995
+    BNO055 --I2C --^
+    ACS712 30A on 6V rail
+    e-stop cuts 6V servo rail
 ```
 
 ## Process split
@@ -30,7 +29,7 @@ Do **not** bit-bang twelve analog servos from Python on the Pi in production. Do
 
 ## Interfaces
 
-- **Pi → MCU:** framed serial (length + CRC). Messages: mode (stand/walk/estop), body velocity, optional joint overrides. Telemetry back: MCU faults; joint positions only if bus servos are added later.
+- **Pi → MCU:** framed serial to **ESP32-S3**. Modes: stand/walk/estop, body velocity. Telemetry: IMU attitude, rail current, faults. No joint encoders on MG995.
 - **Camera:** CSI (CAM1) into Pi 5, `rpicam` / libcamera into Hailo post-process. USB camera only if CSI routing fails.
 - **Audio:** USB mic or I2S MEMS + USB/I2S DAC. Pi 5 has no analog headphone jack.
 - **HAT stack:** AI HAT+ owns PCIe and sits on the 40-pin header. Extra boards are **not** stacked HATs; they are USB or flying-lead GPIO.

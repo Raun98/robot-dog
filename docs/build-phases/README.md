@@ -39,4 +39,4 @@ Instruction set for humans and later AI sessions. Do not skip Phase 0 completene
 
 ## Later (not scheduled)
 
-ST3215/STS3215 only if MG995 walk is not good enough (new ADR). ROS 2, outdoor nav, battery optimization, license publication (ADR-0003).
+Battery (PWR-002/003), ROS 2, outdoor nav, license (ADR-0003). ST3215/clones stay rejected unless a new ADR.

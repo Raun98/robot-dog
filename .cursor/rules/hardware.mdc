@@ -8,6 +8,7 @@ alwaysApply: false
 
 - AI HAT+ uses PCIe plus the 40-pin stack. Do not specify another HAT on that header.
 - Route MCU links over USB-serial or remaining GPIO UART/I2C breakouts, not a PWM HAT.
-- v1 walking: 12× MG995 + PCA9685 + external stall-rated BEC (ADR-0002). ST3215 (Waveshare) = STS3215 (Feetech); buy only if MG995 walk fails.
+- Frozen walk stack (ADR-0004): 12× MG995 + PCA9685 + stall-rated 6V BEC + ESP32-S3. ST3215/clones and ₹1200 DIY joints are rejected.
+- Official Camera Module 3 CSI for Hailo. BNO055 on the gait MCU. ACS712 30A on the servo rail.
 - Document voltage, stall current, and connector for every actuator you add to the BOM.
 - CSI camera is preferred for Hailo + `rpicam` pipelines. USB camera is a fallback only.

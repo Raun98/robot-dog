@@ -1,76 +1,54 @@
 # Hardware
 
-Planning only. Implementation artifacts later go in `/hardware`.
+Frozen in [ADR-0004](../decisions/0004-hardware-freeze.md). Planning only; pin maps later in `/hardware`.
 
 ## Compute (fixed)
 
-See [ADR-0001](../decisions/0001-compute.md).
+[ADR-0001](../decisions/0001-compute.md): Pi 5 8 GB + AI HAT+ 26 TOPS. **Buy if missing:** active cooler, 27W 5V/5A PSU, A2 microSD. Do not run Hailo on a phone charger.
 
-- Raspberry Pi 5 8 GB.
-- Official AI HAT+ (26 TOPS, Hailo-8L class) on the Pi 5 PCIe FPC + GPIO stack.
-- Pi 5 **active cooler** expected.
-- Software bring-up (later): Raspberry Pi OS 64-bit, `sudo apt install hailo-all`, PCIe Gen 3, `hailortcli fw-control identify`, CSI camera on CAM1.
+## HAT stacking
 
-## HAT stacking (hard constraint)
+AI HAT+ owns the 40-pin + PCIe. **No** second HAT. MCU is USB-serial. PCA9685 is a flying I2C board, not stacked on the Pi.
 
-The AI HAT+ sits on the 40-pin header and uses PCIe. **Do not** plan a PCA9685 HAT (or any second HAT) stacked on that same header.
+## Camera (pay extra now)
 
-Options that are allowed:
-
-- USB-serial to a motion MCU (preferred).
-- Flying-lead UART/I2C from remaining pins if a pinout is verified against the AI HAT+ leftover pins.
-- USB camera only as camera fallback (CSI preferred).
-
-## Camera
-
-- **Preferred:** Raspberry Pi Camera Module 3 (CSI, CAM1) for Hailo + `rpicam` pipelines.
-- Route the ribbon through the body with strain relief; 180° vs standard camera orientation is a CAD item.
-- High Quality Camera is optional if a C-mount lens is needed later.
+**Official Camera Module 3** on CAM1. USB or clone CSI is a Hailo dead end.
 
 ## Audio
 
-Pi 5 has **no analog audio jack**.
+USB mic (required for “hear”). USB speaker optional. No analog jack on Pi 5.
 
-- **Hear:** USB microphone, or I2S MEMS mic (ReSpeaker-style USB is simpler on a crowded GPIO).
-- **Speak (optional v1):** USB speaker or I2S DAC + small speaker.
-- Keep USB devices on a powered hub if the Pi port current is tight once Wi-Fi + Hailo + camera are running.
-
-## Motion — v1 (owned, walk on these)
-
-See [ADR-0002](../decisions/0002-motion-stack.md).
+## Motion (frozen)
 
 | Item | Role |
 | --- | --- |
-| Arduino Uno | PWM/I2C bring-up MCU; 5 V logic; not the long-term gait CPU |
-| PCA9685 | 16-ch I2C PWM; **12 channels** for 12-DOF walk |
-| MG995 × 12 | v1 walking actuators; analog; no position feedback; high stall current |
+| 12× MG995 | Legs. Open-loop. Owned. |
+| PCA9685 | 12 PWM channels; 12–15 spare |
+| ESP32-S3 N16R8 | Gait MCU; native USB to Pi |
+| Uno | Phase 1 PWM jig only |
+| I2C level shifter | 3.3 V ESP32 ↔ 5 V PCA9685 |
+| BNO055 | Body fusion IMU (not a joint encoder) |
+| ACS712 30A | 6 V rail stall detect |
+| 6 V BEC 20–30 A class | Servo rail; e-stop cuts this |
+| Fuse + e-stop | Hardware |
 
-Use a **stall-rated** 5–6 V BEC for all twelve, not a tiny hobby BEC meant for one or two servos. Never power MG995s from the Uno 5 V pin. Sense pack/BEC current with **ACS712 20/30 A** (CUR-001), not a stock INA219 ±3.2 A module.
+Never power servos from Uno or Pi 5 V.
 
-**ESP32-S3** (MCU-002) should talk to this **same PCA9685** over I2C (level shifter). That does not require new servos. **Teensy 4.1** is optional.
+## Rejected (do not buy)
 
-**IMU:** MPU-6050 GY-521 (IMU-001) on the gait MCU for body pitch/roll. Optional BNO055/085 (IMU-002) only if the MPU is too noisy.
+- ST3215 / STS3215 **and ~₹2k clones** (~₹24k for twelve).
+- DIY printed joints at ₹1,200 ([diy-actuators](../research/diy-actuators.md)).
+- Teensy 4.1 unless analog joint pots are a later ADR; use ADS1115 on the ESP32 I2C bus instead.
 
-## Motion — deferred (only if MG995 walk fails)
+## MCU
 
-| Item | Role |
+| Board | Status |
 | --- | --- |
-| Waveshare **ST3215** / Feetech **STS3215** (same family) | TTL bus, encoder, current/temp; India ~₹1,800–2,900 each so twelve is ~₹22k–35k |
-| Bus adapter | Replaces PCA9685 on that path |
+| Uno | Bring-up |
+| ESP32-S3 N16R8 | **Frozen** gait CPU |
+| Teensy 4.1 | Optional later |
+| Pi 5 | Not the servo loop |
 
-Confirm 7.4 V vs 12 V SKU before any purchase. Do not buy a set until v1 walking shows MG995s are the limiter.
+## Mechanical
 
-**DIY 3D-printed actuators (ACT-001)** are a **study**, not a buy: ₹1,200 all-in does not make a walkable hip/knee. See [diy-actuators](../research/diy-actuators.md).
-
-## MCU comparison (short)
-
-| Board | Keep? | Why |
-| --- | --- | --- |
-| Arduino Uno | Bench only | 16 MHz, 2 KB SRAM; OK for PWM sweep, weak for gait + IMU |
-| ESP32-S3 | **Recommended** (~₹500–1,000) | Gait + MPU-6050 while still driving PCA9685 |
-| Teensy 4.1 | Optional (~₹3,400+) | Strong real-time; skip on budget |
-| Pi 5 alone | Not for servo loop | Linux jitter; HAT pin conflict |
-
-## Mechanical-electrical interface
-
-Leave volume and airflow for: Pi 5 + HAT + cooler, battery, CSI ribbon, USB to MCU, PCA9685, and twelve MG995 power/signal leads. Mass budget: see [design](../design/README.md).
+CAD around **MG995**. Leave volume for Pi + HAT + cooler, CSI ribbon, USB to ESP32, PCA9685, twelve servo leads, 6 V BEC.

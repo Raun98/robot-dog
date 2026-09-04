@@ -28,9 +28,9 @@ Human and AI contributors should start with [AGENTS.md](AGENTS.md).
 
 ## Owned vs recommended hardware
 
-**v1 walks on twelve owned MG995s** plus PCA9685 PWM ([ADR-0002](docs/decisions/0002-motion-stack.md)). ST3215 / STS3215 stay **deferred** (~₹22k–35k for twelve in India). A **ESP32-S3** may replace the Uno for gait while keeping the same servos; **MPU-6050** is the v1 IMU. DIY printed joints at ₹1,200 are not walkable ([diy-actuators](docs/research/diy-actuators.md)).
+**Frozen stack (ADR-0004):** 12× MG995 + PCA9685 + ESP32-S3 + BNO055. ST3215/clones (~₹2k each) and DIY joints at ₹1,200 are **rejected**. Spend extra now on Camera Module 3, a stall-rated 6 V BEC, Pi cooler/27W PSU, and BNO055 — not on bus-servo clones.
 
-Compute is **fixed**: Pi 5 8 GB + AI HAT+. License (open vs closed design) is **TBD** ([ADR-0003](docs/decisions/0003-license-tbd.md)).
+Compute is **fixed**: Pi 5 8 GB + AI HAT+. License TBD ([ADR-0003](docs/decisions/0003-license-tbd.md)).
 
 ## Out of scope right now
 

@@ -7,8 +7,7 @@ Separate the **logic/compute rail** from the **actuator rail**. Mixing them is t
 | Rail | Typical use | Notes |
 | --- | --- | --- |
 | Pi 5 V (5 V, high current) | Pi 5 + AI HAT+ + CSI camera + USB MCU | Official PSU class is 5 V / 5 A when tethered. On battery, use a dedicated buck rated with headroom for Hailo + Wi-Fi bursts (plan **≥ 27 W** for compute alone before servos). |
-| Servo (v1) | MG995 ~6 V, twelve in parallel on one rail | Size for **stall**, not no-load. Twelve analog servos can demand tens of amps if they stall together. |
-| Servo (deferred bus) | ST3215/STS3215 7.4 V or 12 V SKU | Only if MG995 walk fails; then re-do the pack. |
+| Servo | MG995 ~6 V, twelve on one rail | Stall-rated **20–30 A** BEC. E-stop cuts this rail. |
 | MCU 3.3/5 V | From USB (Pi) or a small regulator from the pack | Do not power the Uno's barrel from the servo stall rail without regulation. |
 
 ## Topology (v1)
@@ -17,9 +16,9 @@ Separate the **logic/compute rail** from the **actuator rail**. Mixing them is t
 Battery pack --> fuse --> [buck 5V Pi] --> Pi 5 + AI HAT+
                  \--> [high-current 5-6V BEC] --> 12x MG995 via PCA9685 V+
 USB: Pi <---> motion MCU (isolated logically; share ground with care)
-I2C: MCU --> (level shift if 3.3V MCU) --> PCA9685
-E-stop: cuts servo rail (hardware), MCU sees a pin and zeros PWM
-ACS712 20/30A: on servo BEC high side/return (isolated hall); divider if MCU is 3.3 V
+E-stop: cuts 6V servo rail (hardware)
+ACS712 30A: on servo BEC; divider if MCU is 3.3 V
+I2C: ESP32-S3 --> level shifter --> PCA9685 + BNO055
 ```
 
 ## Grounding

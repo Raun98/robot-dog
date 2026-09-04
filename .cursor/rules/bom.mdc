@@ -7,6 +7,6 @@ alwaysApply: false
 # BOM
 
 - Edit `bom/bom.csv` for every part add, qty change, or status change.
-- Status values: `owned`, `recommended`, `optional`, `deferred`.
+- Status values: `owned`, `recommended`, `optional`, `deferred`, `rejected`.
 - Keep README schema in sync if you add columns.
 - Owned prototype parts stay in the sheet; do not delete them when recommending replacements.

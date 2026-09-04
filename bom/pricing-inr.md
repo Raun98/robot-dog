@@ -18,11 +18,11 @@ DIY printed joints: [`docs/research/diy-actuators.md`](../docs/research/diy-actu
 | Clones | Very common; still usable | Fewer fakes on branded boards |
 | Role | Complementary filter on the MCU | Less filter work |
 
-It does **not** replace ST3215 joint encoders. It tells you how the **body** is tilting. Pair with conservative gait. Skip Teensy+BNO085 if the goal is to stay off the ₹20k servo upgrade.
+It does **not** replace joint encoders. **Frozen IMU is BNO055** (pay extra now for on-chip fusion). MPU-6050 remains an optional spare.
 
-## ST3215 at ~₹1,000/motor?
+## ST3215 / clones (~₹2,000 each)
 
-**Not on Indian retail for MG995-class torque with a bus + encoder.**
+**Rejected** (ADR-0004). Twelve × ₹2,000 ≈ ₹24,000. Not a v1 or v1.5 buy.
 
 | Option | ≈ ₹ / motor | 12× | Feedback | Dog legs? |
 | --- | --- | --- | --- | --- |
@@ -33,7 +33,7 @@ It does **not** replace ST3215 joint encoders. It tells you how the **body** is 
 
 Shop examples: [Rees52 ST3215 ₹1,799](https://rees52.com/products/waveshare-30kg-serial-bus-servo-st3215-serial-bus-servo-with-programmable-high-torque-360-rotation-and-magnetic-encoder-servo-powerful-30kg-servo-for-demanding-robotics-applications-rs8381), [Hubtronics ST3215 ₹2,199](https://hubtronics.in/st3215-servo), [ThinkRobotics ST3215 ₹2,650](https://thinkrobotics.com/products/st3215-series-serial-bus-servo), [Tomson STS3215 ₹2,899](https://www.tomsonelectronics.com/products/serial-bus-servo-motor-sts3215-7-4v-19kg-360-degree).
 
-₹1,000 × 12 = ₹12,000 would be a fair *study* budget, but **no in-stock India part** matches “bus + encoder + ~10–20 kg·cm” at that price. Keep ST3215 `deferred`. Do not buy twelve 2 kg·cm bus micros.
+Keep ST3215 `rejected`. Do not buy twelve 2 kg·cm bus micros.
 
 ## DIY 3D-printed actuator @ ₹1,200?
 
@@ -43,11 +43,11 @@ Shop examples: [Rees52 ST3215 ₹1,799](https://rees52.com/products/waveshare-30
 
 | Board | ≈ ₹ | Verdict |
 | --- | --- | --- |
-| ESP32-S3 DevKit (N16R8 class) | **500–1,000** | **Buy this** for v1 gait + MPU-6050 + I2C PCA9685. Disable Wi-Fi while walking. |
-| Teensy 4.1 | **3,400–4,000** ([Robocraze](https://robocraze.com/products/teensy-4-1-development-board)) | Better ADCs if you later add joint pots. Skip until MG995 walk needs that. |
+| ESP32-S3 DevKit (N16R8 class) | **500–1,000** | **Frozen** gait MCU (ADR-0004). Disable Wi-Fi while walking. |
+| Teensy 4.1 | **3,400–4,000** ([Robocraze](https://robocraze.com/products/teensy-4-1-development-board)) | Optional later for analog pots; skip now |
 | Arduino Uno | owned | Bring-up only |
 
-IMU + MCU incremental: **MPU-6050 + ESP32-S3 ≈ ₹650–1,200**, not Teensy + BNO085 (₹6k+).
+Frozen incremental electronics: **ESP32-S3 + BNO055 + ACS712 30A + level shifter ≈ ₹2,200–3,500**, plus stall-rated BEC if needed. Camera Module 3 ≈ ₹3,050–3,200 extra.
 
 ## Current sense
 
@@ -59,14 +59,12 @@ Stock **INA219** boards are often **±3.2 A** — too small for twelve MG995s. P
 
 | Scenario | What you still buy | ≈ ₹ |
 | --- | --- | --- |
-| **A. Walk on a budget** | ESP32-S3, MPU-6050, ACS712 20/30 A, e-stop, USB cable, fat 6 V BEC if the bench PSU cannot do 12 servos | **1,500–4,000** |
+| **A. Frozen walk electronics** | ESP32-S3, BNO055, ACS712 30A, level shifter, e-stop, USB, 6 V 20–30 A BEC if needed | **2,500–5,500** |
 | **A + see/hear** | A + Camera Module 3 + USB mic + cooler/SD/PSU if missing | **+3,500–6,000** |
-| **B. Fancy MCU/IMU** | Teensy 4.1 + BNO055/085 | **+3,500–6,500 vs A** (avoid) |
-| **C. ST3215 legs** | 12× bus servos | **+22,000–35,000** (user ~₹20k) |
-| **D. DIY print @ ₹1.2k × 12** | 12× N20-class joints | **+6,600–14,400** and **still not walkable** |
-| **E. DIY QDD / 5008 cycloid × 12** | Real printed actuators + FOC | **₹60k+**; not this project phase |
+| **C. ST3215 / clones** | 12× ~₹2k | **~₹24,000** — **rejected** |
+| **D. DIY print @ ₹1.2k × 12** | 12× N20-class | **rejected** for walking |
 
-v1 plan: **scenario A**, then camera when ready. Not B, not C, not D, not E.
+v1 plan: **scenario A + Camera Module 3**. Not C, not D.
 
 ## Unit ranges (see also [`pricing-inr.csv`](pricing-inr.csv))
 
@@ -81,16 +79,17 @@ v1 plan: **scenario A**, then camera when ready. Not B, not C, not D, not E.
 | AUD-001 | USB microphone | 1 | recommended | 200–800 | 200–800 | |
 | AUD-002 | USB speaker | 1 | optional | 300–1,000 | 300–1,000 | |
 | MCU-001 | Arduino Uno | 1 | owned | 400–1,200 | — | |
-| MCU-002 | ESP32-S3 DevKit | 1 | recommended | 500–1,000 | 500–1,000 | Budget gait MCU |
-| MCU-003 | Teensy 4.1 | 1 | optional | 3,400–4,000 | 3,400–4,000 | Do not buy for v1 |
+| MCU-002 | ESP32-S3 DevKit | 1 | recommended | 500–1,000 | 500–1,000 | Frozen gait MCU |
+| MCU-003 | Teensy 4.1 | 1 | optional | 3,400–4,000 | 3,400–4,000 | Skip now |
 | DRV-001 | PCA9685 | 1 | owned | 200–450 | — | |
+| LVL-001 | I2C level shifter | 1 | recommended | 50–150 | 50–150 | 3.3/5 V |
 | SRV-001 | MG995 | 12 | owned | 250–450 | — | |
-| SRV-002 | ST3215 / STS3215 | 12 | deferred | 1,800–2,900 | 21,600–34,800 | Matches ~₹20k story |
-| ACT-001 | DIY printed joint (N20-class) | 12 | deferred | 550–1,200 | 6,600–14,400 | Fits cap; **not walkable** |
-| IMU-001 | MPU-6050 GY-521 | 1 | recommended | 150–200 | 150–200 | v1 IMU |
-| IMU-002 | BNO055 | 1 | optional | 1,500–2,000 | 1,500–2,000 | If MPU is too noisy |
-| CUR-001 | ACS712 20/30 A | 1 | recommended | 80–200 | 80–200 | Not INA219 3.2 A |
-| PWR-001 | 6 V high-current BEC | 1 | owned/verify | 400–1,200 | 400–1,200 | Size for stall |
+| SRV-002 | ST3215 / clones | 12 | rejected | 1,800–2,900 | 21,600–34,800 | ~₹2k clones still ~₹24k |
+| ACT-001 | DIY printed joint | 12 | rejected | 550–1,200 | 6,600–14,400 | Not walkable |
+| IMU-001 | BNO055 | 1 | recommended | 1,500–2,000 | 1,500–2,000 | Frozen body IMU |
+| IMU-002 | MPU-6050 GY-521 | 1 | optional | 150–200 | 150–200 | Spare |
+| CUR-001 | ACS712 30 A | 1 | recommended | 80–235 | 80–235 | Not INA219 3.2 A |
+| PWR-001 | 6 V 20–30 A BEC | 1 | recommended | 400–1,200 | 400–1,200 | Buy if bench PSU is weak |
 | PWR-002 | LiPo 3S class | 1 | deferred | 1,500–3,000 | 1,500–3,000 | |
 | PWR-003 | 5 V 5 A+ buck | 1 | deferred | 400–1,200 | 400–1,200 | |
 | PWR-004 | Fuse + e-stop | 1 | recommended | 100–400 | 100–400 | |
