@@ -1,0 +1,13 @@
+---
+description: Pi 5 and Hailo software conventions
+globs: docs/software/**,software/**
+alwaysApply: false
+---
+
+# Software
+
+- Target Raspberry Pi OS 64-bit. Vision inference runs on Hailo (`hailo-all`), not as the default CPU YOLO path.
+- Pi 5 has no analog headphone jack; audio I/O is USB or I2S.
+- ROS 2 is optional later, not required for v1 behavior loop.
+- Keep high-level behavior on the Pi; do not bit-bang 12 servos from Python in production.
+- Record model names, input size, and Hailo HEF assumptions in docs when you add a pipeline.

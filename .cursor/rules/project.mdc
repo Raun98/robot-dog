@@ -1,0 +1,13 @@
+---
+description: Robot dog project map, BOM, and ADR rules for every session
+alwaysApply: true
+---
+
+# Robot dog — always
+
+- This repo is in **planning (Phase 0)** unless `docs/build-phases/` says otherwise.
+- Read `AGENTS.md`, `docs/architecture/README.md`, and `docs/decisions/` before proposing parts or code.
+- Canonical parts list is `bom/bom.csv`. Never add a part only in prose.
+- Compute is fixed: Pi 5 8 GB + AI HAT+ 26 TOPS. Motion: Uno/PCA9685/MG995 is bench-only (ADR-0002).
+- If architecture changes, add or update an ADR in the same change.
+- Do not invent walking firmware, CAD, or a second HAT stacked on the AI HAT+.

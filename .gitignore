@@ -1,0 +1,39 @@
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editors
+.vscode/
+*.swp
+*~
+
+# Secrets and local env
+.env
+.env.*
+!.env.example
+*.pem
+credentials.json
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Arduino / PlatformIO
+.pio/
+.pioenvs/
+
+# CAD / CAM temps (keep intentional exports in design/)
+*.fcstd1
+*.FCBak
+~$*
+
+# Logs and captures
+*.log
+*.h264
+*.mp4
+!docs/**/*.png

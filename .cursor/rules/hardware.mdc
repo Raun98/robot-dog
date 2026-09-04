@@ -1,0 +1,13 @@
+---
+description: Hardware constraints for Pi 5, AI HAT+, servos, and MCU
+globs: docs/hardware/**,hardware/**
+alwaysApply: false
+---
+
+# Hardware
+
+- AI HAT+ uses PCIe plus the 40-pin stack. Do not specify another HAT on that header.
+- Route MCU links over USB-serial or remaining GPIO UART/I2C breakouts, not a PWM HAT.
+- MG995 + PCA9685 are for bench PWM/power tests. Walking production path is bus servos (see ADR-0002).
+- Document voltage, stall current, and connector for every actuator you add to the BOM.
+- CSI camera is preferred for Hailo + `rpicam` pipelines. USB camera is a fallback only.

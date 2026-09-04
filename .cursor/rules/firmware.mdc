@@ -1,0 +1,12 @@
+---
+description: Motion MCU firmware conventions
+globs: docs/firmware/**,firmware/**
+alwaysApply: false
+---
+
+# Firmware
+
+- Real-time gait, IMU, e-stop, and servo comms belong on the motion MCU, not the Uno as a long-term brain.
+- Uno + PCA9685 firmware is bring-up only (Phase 1).
+- Production: UART/USB command protocol from Pi, 50–100 Hz (or faster) servo loop, current/temp limits if the bus supports them.
+- Never command a walk gait without documented current limits and a hardware e-stop path.

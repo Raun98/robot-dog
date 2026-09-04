@@ -1,0 +1,12 @@
+---
+description: Mechanical design and CAD conventions
+globs: docs/design/**,design/**
+alwaysApply: false
+---
+
+# Design
+
+- Default layout is 12 DOF (3 per leg). Size and mass must fit Pi 5 + AI HAT+ + battery + camera.
+- Do not copy other quadrupeds' CAD. Cite Mini Pupper / SpotMicro / Pupper as references only.
+- License for releasing design files is TBD (ADR-0003). Do not add a LICENSE that contradicts that ADR.
+- Prefer documenting joint limits, servo horn standards, and cable routing before generating meshes.
