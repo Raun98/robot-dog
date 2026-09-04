@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Design
 
-- Default layout is 12 DOF (3 per leg). Size and mass must fit Pi 5 + AI HAT+ + battery + camera.
+- Default layout is 12 DOF (3 per leg). Follow ADR-0005 and `docs/design/kinematics.md`. Size and mass must fit Pi 5 + AI HAT+ + battery + camera.
 - Do not copy other quadrupeds' CAD. Cite Mini Pupper / SpotMicro / Pupper as references only.
 - License for releasing design files is TBD (ADR-0003). Do not add a LICENSE that contradicts that ADR.
-- Prefer documenting joint limits, MG995 horn standards, and cable routing before generating meshes. v1 CAD is MG995; do not block on ST3215.
+- Prefer documenting joint limits, MG995 horn standards, and cable routing before generating meshes. v1 CAD is MG995; do not block on ST3215. First CAD tool is FreeCAD.

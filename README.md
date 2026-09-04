@@ -28,7 +28,7 @@ Human and AI contributors should start with [AGENTS.md](AGENTS.md).
 
 ## Owned vs recommended hardware
 
-**Frozen stack (ADR-0004):** 12× MG995 + PCA9685 + ESP32-S3 + BNO055. ST3215/clones (~₹2k each) and DIY joints at ₹1,200 are **rejected**. Spend extra now on Camera Module 3, a stall-rated 6 V BEC, Pi cooler/27W PSU, and BNO055 — not on bus-servo clones.
+**Frozen stack (ADR-0004):** 12× MG995 + PCA9685 + ESP32-S3 + BNO055. **Body (ADR-0005):** 12-DOF short-link MG995 quadruped; see `docs/design/`. ST3215/clones (~₹2k each) and DIY joints at ₹1,200 are **rejected**. Spend extra now on Camera Module 3, a stall-rated 6 V BEC, Pi cooler/27W PSU, and BNO055 — not on bus-servo clones.
 
 Compute is **fixed**: Pi 5 8 GB + AI HAT+. License TBD ([ADR-0003](docs/decisions/0003-license-tbd.md)).
 

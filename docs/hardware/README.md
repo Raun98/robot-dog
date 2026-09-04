@@ -51,4 +51,4 @@ Never power servos from Uno or Pi 5 V.
 
 ## Mechanical
 
-CAD around **MG995**. Leave volume for Pi + HAT + cooler, CSI ribbon, USB to ESP32, PCA9685, twelve servo leads, 6 V BEC.
+CAD around **MG995** ([ADR-0005](../decisions/0005-mechanical-layout.md)). Leave volume for Pi + HAT + cooler, CSI ribbon, USB to ESP32, PCA9685, twelve servo leads, 6 V BEC. Joint IDs: [channel-map.md](channel-map.md).

@@ -8,7 +8,7 @@ A robot dog that:
 2. **Sees** — CSI camera + Hailo-8L on the AI HAT+ for real-time detection / tracking.
 3. **Hears** — microphone in, optional speaker out (wake word and simple commands).
 
-The body is built by the project owner. Mechanical design may be released later; that choice is not made yet.
+The body is built by the project owner. v1 layout is frozen in [ADR-0005](../decisions/0005-mechanical-layout.md). Public CAD license is still TBD ([ADR-0003](../decisions/0003-license-tbd.md)).
 
 ## Constraints
 

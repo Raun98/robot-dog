@@ -1,6 +1,6 @@
 # Architecture
 
-Working assumption: [ADR-0004](../decisions/0004-hardware-freeze.md) (stack) and [ADR-0001](../decisions/0001-compute.md) (compute). Motion history: [ADR-0002](../decisions/0002-motion-stack.md).
+Working assumption: [ADR-0004](../decisions/0004-hardware-freeze.md) (stack), [ADR-0001](../decisions/0001-compute.md) (compute), [ADR-0005](../decisions/0005-mechanical-layout.md) (body). Motion history: [ADR-0002](../decisions/0002-motion-stack.md).
 
 ## Block diagram
 
