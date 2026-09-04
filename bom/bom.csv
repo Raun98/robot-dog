@@ -25,5 +25,11 @@ PWR-004,electrical,Fuse + hardware e-stop on servo rail,1,recommended,Safety,Cut
 PWR-005,electrical,ATX desktop PC PSU,1,owned,Tethered servo brick,5V red to MG995 bus (not Pi); confirm sticker +5V amps; PS_ON to GND
 PWR-006,electrical,ATX 5V distribution kit,1,recommended,Fat servo bus off PCA9685 copper,ATO holder + 30A fuse; 12-14 AWG; XT60 or barrier; do not dump 12-stall through PCA9685 V+
 CBL-001,electrical,USB-A/C cable Pi to MCU,1,recommended,Command/telemetry,Avoid servo return current in this cable
-CBL-002,electrical,CSI camera ribbon,1,recommended,Camera to Pi,If not in camera kit; strain relief
-MECH-001,design,3D-printed or machined body,1,deferred,Structure,CAD around MG995; license TBD
+CBL-002,electrical,CSI camera ribbon,1,recommended,Camera to Pi,Pi 5 22-pin 0.5mm to Module 3 15-pin if not in camera kit; strain relief
+MECH-001,design,3D-printed torso and legs,1,deferred,Structure,Geometry ADR-0005; FreeCAD in Phase 4; license TBD
+MECH-002,design,PETG filament 1kg class,1,recommended,Load prints,Coxa femur tibia tray; PLA+ only for lid/clips
+MECH-003,design,TPU foot pads or TPU filament,4,recommended,Traction,One per foot; hard PLA on tile slips
+MECH-004,design,Bench stand or sling,1,recommended,Phase 4 safety,Body cannot face-plant during first poses
+FAST-001,design,M3 screw nut washer assortment,1,recommended,Servos and tray,~50 M3x8/10 plus nuts; MG995 tabs
+FAST-002,design,M3 heat-set inserts,50,recommended,Reusable plastic threads,Tray lid hips
+FAST-003,design,M2.5 Pi standoffs plus M2 camera/IMU screws,1,recommended,Compute and sensing,4x M2.5 for Pi 5; M2 for Module 3 and BNO055

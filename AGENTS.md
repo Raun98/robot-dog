@@ -4,7 +4,7 @@ This file is the map for humans and AI working in this repository. Prefer it ove
 
 ## Project state
 
-- **Phase:** planning (Phase 0). Hardware stack is **frozen** in `docs/decisions/0004-hardware-freeze.md`.
+- **Phase:** planning (Phase 0). Hardware stack is **frozen** in `docs/decisions/0004-hardware-freeze.md`. Mechanical layout is **frozen** in `docs/decisions/0005-mechanical-layout.md`.
 - **Schedule:** `docs/build-phases/action-plan.md` (part-time calendar; target first fenced walk ~14 Dec 2026).
 - **Compute (fixed):** Raspberry Pi 5 8 GB + official AI HAT+ (26 TOPS). ADR-0001.
 - **Motion (frozen):** 12× MG995 + PCA9685 + ESP32-S3 N16R8. ST3215/clones and DIY ₹1,200 joints are **rejected**. ADR-0002 + ADR-0004.
@@ -18,7 +18,8 @@ This file is the map for humans and AI working in this repository. Prefer it ove
 1. `docs/architecture/README.md`
 2. `docs/decisions/`
 3. `bom/README.md` and `bom/bom.csv`
-4. The matching `docs/<category>/` folder for the files you are changing
+4. Mechanical: `docs/design/` (kinematics, packaging, print plan)
+5. The matching `docs/<category>/` folder for the files you are changing
 
 ## Rules
 
@@ -36,6 +37,7 @@ This file is the map for humans and AI working in this repository. Prefer it ove
 | Research, constraints, how-to for later agents | `docs/<category>/` |
 | New part, qty, or status | `bom/bom.csv` (+ short note in `bom/README.md` if the schema changes) |
 | Architecture fork | new ADR in `docs/decisions/` |
+| Electrical topology, rails, e-stop (planning) | `docs/electrical/` |
 | Pin maps, schematics (later) | `hardware/` |
 | MCU sketches (later) | `firmware/` |
 | Pi / Hailo apps (later) | `software/` |

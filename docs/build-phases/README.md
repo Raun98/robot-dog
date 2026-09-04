@@ -29,8 +29,8 @@ Instruction set for humans and later AI sessions. Do not skip Phase 0 completene
 
 ## Phase 4 — Mechanical prototype
 
-- CAD for **MG995** legs (v1).
-- Single-leg then four-leg on a **stand**. High-current 6 V rail for twelve servos.
+- CAD for **MG995** legs (v1) using [ADR-0005](../decisions/0005-mechanical-layout.md) lengths.
+- Single-leg then four-leg on a **stand**. Fused **ATX 5 V** (or later 6 V BEC) for twelve servos.
 - **Exit:** stand pose under MCU control; Pi serial connected; e-stop proven.
 
 ## Phase 5 — Integrated walk

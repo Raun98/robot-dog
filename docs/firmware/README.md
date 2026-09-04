@@ -5,7 +5,7 @@ MCU firmware. Sketches later live in `/firmware`. Stack: [ADR-0004](../decisions
 ## Responsibilities (ESP32-S3)
 
 - Gait / IK at **50–100 Hz**.
-- PCA9685: 12× MG995 PWM.
+- PCA9685: 12× MG995 PWM. Channel map: [hardware/channel-map.md](../hardware/channel-map.md). IK lengths: [design/kinematics.md](../design/kinematics.md).
 - **BNO055** attitude for stand / slow walk.
 - **ACS712 30A** rail current; trip to sit/e-stop on stall spike.
 - Pi USB-serial commands; failsafe if the link drops.

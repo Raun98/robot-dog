@@ -96,7 +96,13 @@ v1 plan: **scenario A + Camera Module 3**. Not C, not D.
 | PWR-005 | ATX PC PSU | 1 | owned | — | — | Servo brick; not Pi |
 | PWR-006 | ATX 5 V distribution | 1 | recommended | 200–500 | 200–500 | Fuse holder, 12–14 AWG, XT60/barrier |
 | CBL-001 | USB Pi–MCU | 1 | recommended | 50–200 | 50–200 | |
-| CBL-002 | CSI ribbon | 1 | recommended | 100–400 | 100–400 | If not in camera kit |
-| MECH-001 | Print filament | 1 | deferred | 800–2,500 | 800–2,500 | PETG/ABS; design TBD |
+| CBL-002 | CSI ribbon | 1 | recommended | 100–400 | 100–400 | Pi 5 22-pin if not in kit |
+| MECH-001 | Printed body | 1 | deferred | — | — | CAD Phase 4; filament is MECH-002 |
+| MECH-002 | PETG 1 kg | 1 | recommended | 800–1,500 | 800–1,500 | Load parts |
+| MECH-003 | TPU feet | 4 | recommended | 50–200 | 200–800 | Pads or TPU print |
+| MECH-004 | Stand / sling | 1 | recommended | 0–800 | 0–800 | Print or buy |
+| FAST-001 | M3 assortment | 1 | recommended | 150–400 | 150–400 | ~50 screws |
+| FAST-002 | M3 heat-set inserts | 50 | recommended | 2–6 | 100–300 | |
+| FAST-003 | M2.5/M2 kit | 1 | recommended | 100–300 | 100–300 | Pi + camera + IMU |
 
 Sources (examples): [Robocraze MPU-6050](https://robocraze.com/products/mpu-6050-triple-axis-accelerometer-gyroscope-module), [Hubtronics ST3215](https://hubtronics.in/st3215-servo), [Rees52 ST3215](https://rees52.com/products/waveshare-30kg-serial-bus-servo-st3215-serial-bus-servo-with-programmable-high-torque-360-rotation-and-magnetic-encoder-servo-powerful-30kg-servo-for-demanding-robotics-applications-rs8381), [Tomson STS3215](https://www.tomsonelectronics.com/products/serial-bus-servo-motor-sts3215-7-4v-19kg-360-degree), [Robocraze Teensy 4.1](https://robocraze.com/products/teensy-4-1-development-board), [Graylogix ESP32-S3](https://www.graylogix.in/product/node-mcu-esp32-s3-n16r8-devkit), [ElectroPi Camera 3](https://www.electropi.in/raspberry-pi-camera-module-3), [Robocraze ACS712](https://robocraze.com/products/30a-acs712-current-sensor), [Evelta 2804+AS5600](https://evelta.com/2804-3-phase-brushless-dc-motor-12v-2600rpm-300g-cm/).

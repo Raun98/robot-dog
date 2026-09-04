@@ -2,13 +2,24 @@
 
 Separate the **logic/compute rail** from the **actuator rail**. Mixing them is the usual way to brown out a Pi 5 and corrupt an SD card.
 
-## Rails
+**Role:** circuit and PDB design for this repo follows the electrical-engineer rule and the notes in this folder. Complexity tracks [build phases](../build-phases/README.md) — see [phase-work.md](phase-work.md).
+
+## Documents
+
+| Doc | Contents |
+| --- | --- |
+| [phase-work.md](phase-work.md) | What to wire at each phase |
+| [power-distribution.md](power-distribution.md) | Dual rails, gauges, PCA9685 V+/VCC |
+| [estop-and-current.md](estop-and-current.md) | High-side e-stop, ACS712 30 A into ESP32 ADC |
+| [interfaces.md](interfaces.md) | USB, I2C + level shift, PWM, e-stop sense |
+
+## Rails (summary)
 
 | Rail | Typical use | Notes |
 | --- | --- | --- |
-| Pi 5 V (5 V, high current) | Pi 5 + AI HAT+ + CSI camera + USB MCU | Official PSU class is 5 V / 5 A when tethered. On battery, use a dedicated buck rated with headroom for Hailo + Wi-Fi bursts (plan **≥ 27 W** for compute alone before servos). |
+| Pi 5 V (5 V, high current) | Pi 5 + AI HAT+ + CSI camera + USB MCU | Official PSU class is 5 V / 5 A when tethered. On battery, dedicated buck with headroom for Hailo + Wi-Fi (**≥ 27 W** compute before servos). Never ATX 5 V into the Pi. |
 | Servo | MG995 5–6 V, twelve on one rail | **Bench:** owned ATX **5 V (red)** if **+5V ≥ ~25 A**. **Mobile:** 6 V BEC (deferred). E-stop cuts this rail. |
-| MCU 3.3/5 V | From USB (Pi) or a small regulator from the pack | Do not power the Uno's barrel from the servo stall rail without regulation. |
+| MCU 3.3/5 V | From USB (Pi) or a small regulator from the pack | Do not power the Uno barrel from the servo stall rail without regulation. |
 
 ## Topology (v1)
 

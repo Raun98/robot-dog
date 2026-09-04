@@ -33,7 +33,7 @@ ATX 5V (bench) or 6V stall-rated BEC (mobile) --> MG995 power bus (e-stop cuts t
 | Servo drive | PCA9685 (owned) | Keep; do not stack as a Pi HAT |
 | Legs | **12× MG995** (owned) | No ST3215, no clones, no printed QDD |
 | Body IMU | **BNO055** (on-chip fusion) | **Yes vs GY-521 clones.** Best cheap compensation for no joint encoders |
-| Current | **ACS712 30A** on the 6 V rail | Yes (30A, not INA219 3.2A) |
+| Current | **ACS712 30A** on the servo rail | Yes (30A, not INA219 3.2A) |
 | I2C | Bidirectional **level shifter** 3.3/5 V | Yes (ESP32 + PCA9685 + BNO) |
 | Power | Separate Pi 5V vs servo stall-rated **~20–30 A** | **Bench:** owned **ATX 5 V** if label **+5V ≥ ~25 A**. **Do not buy UBEC this cart.** Mobile/6 V = Hobbywing `30606000` later with 3S |
 | Safety | Hardware e-stop + fuse on servo rail | Yes |
