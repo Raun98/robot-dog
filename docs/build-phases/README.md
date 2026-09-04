@@ -2,6 +2,8 @@
 
 Instruction set for humans and later AI sessions. Do not skip Phase 0 completeness: docs and BOM stay accurate when parts change.
 
+**Calendar and weekly actions:** [action-plan.md](action-plan.md) (part-time, start 2026-09-04, target fenced walk ~14 Dec 2026). Dates may slip; phase exits below do not.
+
 ## Phase 0 — Documentation (current)
 
 - Repo map, ADRs, hardware/software/firmware/design/electrical/safety notes, consolidated BOM.
@@ -11,7 +13,7 @@ Instruction set for humans and later AI sessions. Do not skip Phase 0 completene
 
 ## Phase 1 — Motion bench (owned parts)
 
-- Arduino Uno + PCA9685 + 1–2 of the 12 MG995s, external BEC, e-stop or kill switch.
+- Arduino Uno + PCA9685 + 1–2 of the 12 MG995s, **owned ATX 5 V** (fused), e-stop or kill switch.
 - Channel map document in `/hardware` when written.
 - **Exit:** safe PWM sweep, no Uno-powered servos, numbered channels 0–11 reserved.
 
@@ -28,7 +30,7 @@ Instruction set for humans and later AI sessions. Do not skip Phase 0 completene
 ## Phase 4 — Mechanical prototype
 
 - CAD for **MG995** legs (v1) using [ADR-0005](../decisions/0005-mechanical-layout.md) lengths.
-- Single-leg then four-leg on a **stand**. High-current 6 V rail for twelve servos.
+- Single-leg then four-leg on a **stand**. Fused **ATX 5 V** (or later 6 V BEC) for twelve servos.
 - **Exit:** stand pose under MCU control; Pi serial connected; e-stop proven.
 
 ## Phase 5 — Integrated walk

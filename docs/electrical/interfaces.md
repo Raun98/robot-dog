@@ -41,10 +41,10 @@ Dry contact or switch to GND with MCU pull-up (3.3 V). Debounce in firmware. Ope
 
 ## Camera / audio (compute rail)
 
-- Camera Module 3: CSI power from Pi. No 6 V on that ribbon.
+- Camera Module 3: CSI power from Pi. No servo-rail voltage on that ribbon.
 - USB mic/speaker: Pi USB. Budget inside the 27 W compute rail.
 
 ## Level and ESD (planning)
 
-- TVS on 6 V bus at PDB is optional Phase 4; fuse is required.
+- TVS on the servo bus at the PDB is optional Phase 4; fuse is required.
 - Do not hot-plug servo V+ with PWM already commanding a hard position; power servos last ([safety](../safety/README.md)).

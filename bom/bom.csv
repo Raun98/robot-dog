@@ -18,10 +18,12 @@ ACT-001,motion,DIY 3D-printed joint actuator,12,rejected,Not walkable at INR 120
 IMU-001,sensing,BNO055 9-DoF fusion IMU,1,recommended,Frozen body IMU,Pay extra vs MPU-6050; on-chip fusion compensates for no joint encoders
 IMU-002,sensing,MPU-6050 GY-521,1,optional,Spare / bring-up IMU,OK if BNO055 delayed; clones common
 CUR-001,electrical,ACS712 30A hall module,1,recommended,Servo-rail current sense,30A class not 20A if possible; not INA219 3.2A; divider on ESP32 ADC
-PWR-001,electrical,6V stall-rated BEC 20-30A class,1,recommended,Servo rail for 12x MG995,Upgrade now if owned supply is a small bench PSU; never Uno 5V
-PWR-002,electrical,LiPo or Li-ion pack,1,deferred,Untethered energy,After tethered walk
-PWR-003,electrical,5V buck for Pi from pack,1,deferred,Mobile compute rail,>=27W class
-PWR-004,electrical,Fuse + hardware e-stop on servo rail,1,recommended,Safety,Cuts 6V actuator rail
+PWR-001,electrical,6V stall-rated BEC 20-30A class (Hobbywing UBEC 25A HV 30606000),1,deferred,Mobile / 6V servo rail,Not this cart; owned ATX 5V covers tethered bench if +5V >=~25A; never Uno 5V
+PWR-002,electrical,LiPo or Li-ion pack,1,deferred,Untethered energy,After tethered walk; buy with PWR-001
+PWR-003,electrical,5V buck for Pi from pack,1,deferred,Mobile compute rail,>=27W class; not ATX 5V into Pi
+PWR-004,electrical,Fuse + hardware e-stop on servo rail,1,recommended,Safety,Cuts ATX 5V servo feed; 12V relay coil from ATX yellow; ATO 30A on red
+PWR-005,electrical,ATX desktop PC PSU,1,owned,Tethered servo brick,5V red to MG995 bus (not Pi); confirm sticker +5V amps; PS_ON to GND
+PWR-006,electrical,ATX 5V distribution kit,1,recommended,Fat servo bus off PCA9685 copper,ATO holder + 30A fuse; 12-14 AWG; XT60 or barrier; do not dump 12-stall through PCA9685 V+
 CBL-001,electrical,USB-A/C cable Pi to MCU,1,recommended,Command/telemetry,Avoid servo return current in this cable
 CBL-002,electrical,CSI camera ribbon,1,recommended,Camera to Pi,Pi 5 22-pin 0.5mm to Module 3 15-pin if not in camera kit; strain relief
 MECH-001,design,3D-printed torso and legs,1,deferred,Structure,Geometry ADR-0005; FreeCAD in Phase 4; license TBD

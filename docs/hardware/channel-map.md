@@ -2,7 +2,7 @@
 
 Planning document. Implementation sketches later live in `/hardware` and `/firmware`.
 
-Servo rail is **6 V** from the stall-rated BEC, **not** Pi or Uno 5 V. I2C to the PCA9685 is from the **ESP32-S3** through the level shifter (Phase 1 bring-up may use the Uno on the same channel numbers).
+Servo rail is **ATX 5 V** on the bench (6 V BEC deferred), **not** Pi or Uno 5 V. I2C to the PCA9685 is from the **ESP32-S3** through the level shifter (Phase 1 bring-up may use the Uno on the same channel numbers).
 
 | Ch | Leg | Joint | PWM (planning) |
 | --- | --- | --- | --- |

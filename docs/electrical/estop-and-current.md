@@ -7,23 +7,26 @@ Safety policy: [safety](../safety/README.md). Default: **servos off, Pi on**.
 Must interrupt **actuator V+**. A GPIO flag in firmware is not the e-stop.
 
 ```text
-6V BEC + --> [fuse] --> [HIGH-SIDE SWITCH] --> ACS712 IP+ ... IP- --> PCA9685 V+ / servo reds
-                              ^
-                         E-stop loop
-                    (NC button or latch)
+ATX 5V red --> [ATO 30A] --> [HIGH-SIDE SWITCH] --> ACS712 IP+ ... IP- --> fat servo bus --> MG995 reds
+                                 ^
+                            E-stop loop
+                       (NC button or latch)
+ATX 12V yellow --> relay coil (when using a 12 V automotive relay)
 ```
 
 Keep **grounds connected** so PCA9685 PWM and MG995 signal grounds stay valid. Cutting low-side return would float servo GND relative to the MCU.
 
 ### Phase 1
 
-A **series kill switch** or automotive-style switch in the 6 V positive is enough (1–2 servos).
+A **series kill switch** in ATX 5 V positive is enough (1–2 servos), or the same fused e-stop path.
 
 ### Phase 4–5
 
-Use a **40 A-class** high-side device (logic-level MOSFET with proper high-side drive, or an automotive relay/contactor). Drive/coil from a separate small 5 V/6 V control, not from ESP32 GPIO current. MCU **senses** e-stop (open/closed) on a GPIO with a pull-up; it does not “software override” a released button.
+Use a **40 A-class** high-side device (automotive relay/contactor on ATX 12 V coil, or a MOSFET with proper high-side drive). Do not coil a 12 V relay from ESP32 GPIO. MCU **senses** e-stop (open/closed) on a GPIO with a pull-up; it does not “software override” a released button.
 
 Latching mushroom + NC contact in the high-side gate/coil circuit is preferred so the rail stays off until a human reset.
+
+Later 6 V BEC: same cut-V+ idea on the BEC output.
 
 ## ACS712 30A (CUR-001)
 
@@ -41,7 +44,7 @@ ESP32 ADC is **3.3 V max**. Do **not** wire VIOUT straight to an ADC pin.
 
 **Divider (planning):** scale ~4.5 V → ≤3.1 V, e.g. **10 kΩ series from VIOUT, 22 kΩ to GND** (ratio ≈ 0.69 → ~3.1 V at 30 A). Recalibrate on the actual module; ACS712 offset drifts with temperature.
 
-- ACS712 VCC = 5 V logic (same as PCA9685 VCC domain).
+- ACS712 VCC = 5 V logic (same as PCA9685 VCC domain), not the stall bus.
 - Module GND = star GND.
 - Optional RC on the divided node (e.g. 100 nF) to tame PWM hash; firmware still needs a stall threshold, not a pretty waveform.
 

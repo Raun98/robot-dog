@@ -48,9 +48,9 @@ Keep **I2C short**. Cluster these on the tray floor, rear-center, on standoffs:
 | I2C level shifter | Between ESP32 3.3 V I2C and 5 V PCA9685 |
 | PCA9685 | Same cluster; PWM headers toward the four hips; **not** on the Pi GPIO |
 | BNO055 | Rigid to the **chassis**, as close as practical to the body origin, **not** on a servo or the Pi case. Mark `+X` forward on the board silkscreen in CAD notes |
-| ACS712 30A | In series with the **6 V servo positive** after the e-stop, before the PCA9685 V+ rail |
-| 6 V BEC 20–30 A | Rear, ventilated, away from the Pi cooler exhaust |
-| Fuse + e-stop | Pack/BEC positive; button reachable without putting a hand in the legs |
+| ACS712 30A | In series with the **servo positive** after the e-stop, on the fat bus — not through PCA9685 V+ |
+| 6 V BEC 20–30 A | Deferred; rear tray when mobile. Bench uses ATX 5 V off-board. |
+| Fuse + e-stop | ATX 5 V red (bench) or pack/BEC positive later; button reachable without putting a hand in the legs |
 
 Arduino Uno is **bench-only** (Phase 1). It does not get a tray mount on the walking chassis.
 

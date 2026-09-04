@@ -17,18 +17,20 @@ Separate the **logic/compute rail** from the **actuator rail**. Mixing them is t
 
 | Rail | Typical use | Notes |
 | --- | --- | --- |
-| Pi 5 V (5 V, high current) | Pi 5 + AI HAT+ + CSI camera + USB MCU | Official PSU class is 5 V / 5 A when tethered. On battery, dedicated buck with headroom for Hailo + Wi-Fi (**≥ 27 W** compute before servos). |
-| Servo | MG995 ~6 V, twelve on one rail | Stall-rated **20–30 A** BEC. E-stop cuts this rail. |
+| Pi 5 V (5 V, high current) | Pi 5 + AI HAT+ + CSI camera + USB MCU | Official PSU class is 5 V / 5 A when tethered. On battery, dedicated buck with headroom for Hailo + Wi-Fi (**≥ 27 W** compute before servos). Never ATX 5 V into the Pi. |
+| Servo | MG995 5–6 V, twelve on one rail | **Bench:** owned ATX **5 V (red)** if **+5V ≥ ~25 A**. **Mobile:** 6 V BEC (deferred). E-stop cuts this rail. |
 | MCU 3.3/5 V | From USB (Pi) or a small regulator from the pack | Do not power the Uno barrel from the servo stall rail without regulation. |
 
 ## Topology (v1)
 
 ```text
-Battery pack --> fuse --> [buck 5V Pi] --> Pi 5 + AI HAT+
-                 \--> [high-current 5-6V BEC] --> 12x MG995 via PCA9685 V+
+Official 27W USB-C --> Pi 5 + AI HAT+   (never ATX 5V)
+ATX 5V red --> fuse --> e-stop --> 12x MG995 power bus
+              (PCA9685 = PWM only; do not put stall current through V+)
+Later: pack --> fuse --> [6V BEC] --> same servo bus
 USB: Pi <---> motion MCU (isolated logically; share ground with care)
-E-stop: cuts 6V servo rail (hardware)
-ACS712 30A: on servo BEC; divider if MCU is 3.3 V
+E-stop: cuts servo rail (hardware); relay coil from ATX 12V yellow
+ACS712 30A: on servo feed; divider if MCU is 3.3 V
 I2C: ESP32-S3 --> level shifter --> PCA9685 + BNO055
 ```
 
@@ -39,13 +41,13 @@ I2C: ESP32-S3 --> level shifter --> PCA9685 + BNO055
 
 ## Fusing and e-stop
 
-- Fuse or breaker on the pack positive, sized below wire rating.
-- **Hardware e-stop** must interrupt servo power (MOSFET or contactor), not only a software flag.
+- Fuse on ATX **5 V red** (ATO **30 A** class) before the servo bus; later the same idea on pack +.
+- **Hardware e-stop** must interrupt servo power (MOSFET or contactor), not only a software flag. With ATX, coil the 12 V relay from **yellow 12 V**.
 - Pi may stay up during e-stop so logs and camera still work, or shut down — pick one in a later ADR; default is **servos off, Pi on**.
 
 ## Bench (Phase 1)
 
-- External 5–6 V supply or a **high-current** UBEC for the MG995 rail (Phase 1: 1–2 servos; Phase 4–5: all twelve).
+- Owned **ATX 5 V** for the MG995 rail (Phase 1: 1–2 servos; Phase 4–5: all twelve if **+5V ≥ ~25 A**). UBEC + 3S is deferred until untethered / 6 V.
 - Never feed MG995 stall current from the Uno 5 V pin.
 - Logic 5 V Uno vs 3.3 V Pi: if I2C is ever used from the Pi, use a level shifter. USB-serial to Uno avoids that for Phase 1.
 

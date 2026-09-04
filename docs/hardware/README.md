@@ -28,8 +28,9 @@ USB mic (required for “hear”). USB speaker optional. No analog jack on Pi 5.
 | Uno | Phase 1 PWM jig only |
 | I2C level shifter | 3.3 V ESP32 ↔ 5 V PCA9685 |
 | BNO055 | Body fusion IMU (not a joint encoder) |
-| ACS712 30A | 6 V rail stall detect |
-| 6 V BEC 20–30 A class | Servo rail; e-stop cuts this |
+| ACS712 30A | Servo-rail stall detect |
+| ATX 5 V (owned) | Tethered servo brick; e-stop cuts this |
+| 6 V BEC 20–30 A class | Deferred mobile rail |
 | Fuse + e-stop | Hardware |
 
 Never power servos from Uno or Pi 5 V.
@@ -51,4 +52,4 @@ Never power servos from Uno or Pi 5 V.
 
 ## Mechanical
 
-CAD around **MG995** ([ADR-0005](../decisions/0005-mechanical-layout.md)). Leave volume for Pi + HAT + cooler, CSI ribbon, USB to ESP32, PCA9685, twelve servo leads, 6 V BEC. Joint IDs: [channel-map.md](channel-map.md).
+CAD around **MG995** ([ADR-0005](../decisions/0005-mechanical-layout.md)). Leave volume for Pi + HAT + cooler, CSI ribbon, USB to ESP32, PCA9685, twelve servo leads, ATX harness now / 6 V BEC later. Joint IDs: [channel-map.md](channel-map.md).
