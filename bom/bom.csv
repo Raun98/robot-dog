@@ -1,0 +1,22 @@
+id,category,name,qty,status,role,notes
+COMP-001,compute,Raspberry Pi 5 8GB,1,owned,Main computer,Fixed per ADR-0001
+COMP-002,compute,Raspberry Pi AI HAT+ 26 TOPS,1,owned,Hailo-8L vision NPU,Occupies 40-pin and PCIe; do not stack PWM HAT
+COMP-003,compute,Raspberry Pi 5 active cooler,1,recommended,SoC cooling,Treat as required with Hailo load
+COMP-004,compute,microSD card 64GB+ A2,1,recommended,OS storage,Application-class card
+COMP-005,compute,27W USB-C PSU 5V 5A,1,recommended,Tethered Pi power,Not for servos
+CAM-001,sensing,Raspberry Pi Camera Module 3,1,recommended,CSI vision,CAM1; Hailo rpicam path
+AUD-001,sensing,USB microphone,1,recommended,Hearing,Pi 5 has no analog jack
+AUD-002,sensing,USB speaker or I2S DAC + speaker,1,optional,TTS / cues,v1 optional
+MCU-001,motion,Arduino Uno,1,owned,Phase 1 bench MCU,Not production gait CPU
+MCU-002,motion,ESP32-S3 or Teensy 4.1,1,recommended,Production motion MCU,Lock SKU in follow-up ADR; USB-serial to Pi
+DRV-001,motion,PCA9685 16-ch PWM driver,1,owned,Phase 1 analog servo PWM,Not needed for TTL bus servos
+SRV-001,motion,MG995 analog servo,12,owned,Bench actuators,Qty may be less on hand; walking dog should not rely on these
+SRV-002,motion,STS3215-class TTL bus servo,12,recommended,Production 12-DOF,Confirm 7.4V vs 12V SKU; buy spares later
+IMU-001,sensing,IMU breakout (ICM-42688 or BNO085 class),1,recommended,Attitude on MCU,Exact SKU deferred
+PWR-001,electrical,External 5-6V BEC or bench PSU,1,owned,Phase 1 servo rail,Never power MG995 from Uno 5V pin
+PWR-002,electrical,LiPo or Li-ion pack,1,deferred,Untethered energy,Wait for servo voltage ADR
+PWR-003,electrical,5V buck for Pi from pack,1,deferred,Mobile compute rail,>=27W class headroom for Pi+HAT
+PWR-004,electrical,Fuse or breaker + e-stop on servo rail,1,recommended,Safety,Hardware cut of actuator power
+CBL-001,electrical,USB-A/C cable Pi to MCU,1,recommended,Command/telemetry,Avoid servo return current in this cable
+CBL-002,electrical,CSI camera ribbon,1,recommended,Camera to Pi,Length from CAD; strain relief
+MECH-001,design,3D-printed or machined body,1,deferred,Structure,CAD after servo SKU; license TBD
