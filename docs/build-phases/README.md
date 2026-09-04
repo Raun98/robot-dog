@@ -2,6 +2,8 @@
 
 Instruction set for humans and later AI sessions. Do not skip Phase 0 completeness: docs and BOM stay accurate when parts change.
 
+**Calendar and weekly actions:** [action-plan.md](action-plan.md) (part-time, start 2026-09-04, target fenced walk ~14 Dec 2026). Dates may slip; phase exits below do not.
+
 ## Phase 0 — Documentation (current)
 
 - Repo map, ADRs, hardware/software/firmware/design/electrical/safety notes, consolidated BOM.
