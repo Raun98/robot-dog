@@ -11,8 +11,8 @@ Working assumption: [ADR-0004](../decisions/0004-hardware-freeze.md) (stack), [A
             v
 [ESP32-S3] --I2C + level shift--> [PCA9685] --> 12x MG995
     BNO055 --I2C --^
-    ACS712 30A on 6V rail
-    e-stop cuts 6V servo rail
+    ACS712 30A on servo rail
+    e-stop cuts servo rail (ATX 5V bench / 6V BEC later)
 ```
 
 ## Process split
