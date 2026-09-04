@@ -6,7 +6,7 @@ This is a **schedule**, not an architecture change. Slip dates; do not slip the 
 
 ## North-star goal (v1)
 
-A 12-DOF MG995 quadruped that **stands and walks** under MCU control, **sees** with Camera Module 3 + Hailo, and **hears** a wake word — in a **fenced indoor area**, with a hardware e-stop on the 6 V rail.
+A 12-DOF MG995 quadruped that **stands and walks** under MCU control, **sees** with Camera Module 3 + Hailo, and **hears** a wake word — in a **fenced indoor area**, with a hardware e-stop on the **servo** rail (ATX 5 V now; 6 V BEC later).
 
 Non-goals: parkour, on-device LLM gait, cloned CAD, ROS 2 as a requirement, all-day battery. Details: [overview](../overview/README.md).
 
@@ -15,7 +15,7 @@ Non-goals: parkour, on-device LLM gait, cloned CAD, ROS 2 as a requirement, all-
 | Window | Dates | Phase | What “done” means |
 | --- | --- | --- | --- |
 | W0 | 4–10 Sep 2026 | 0 closeout | Order `recommended` BOM; this plan on `main`; no new ADRs unless stack changes |
-| W1–W2 | 8–21 Sep | 1 Motion bench | Uno + PCA9685 + 1–2 MG995, external BEC, e-stop; channel map in `/hardware` |
+| W1–W2 | 8–21 Sep | 1 Motion bench | Uno + PCA9685 + 1–2 MG995, **ATX 5 V**, e-stop; channel map in `/hardware` |
 | W2–W5 | 15 Sep–12 Oct | 2 Vision | Pi OS, cooler, 27W PSU, AI HAT+, official CSI cam, Hailo detection demo, **motors off** |
 | W5–W6 | 6–19 Oct | 3 Audio | USB mic; wake word flips a Pi mode flag; still no walk |
 | W3–W10 | 22 Sep–16 Nov | 4 Mechanical | MG995 CAD → print one leg → four-leg stand; ESP32-S3 + BNO055 + ACS712; stand pose |
@@ -32,20 +32,20 @@ Battery, ROS 2, outdoor nav, and license remain **unscheduled** ([ADR-0003](../d
 | Move | ESP32-S3 + PCA9685 + 12× MG995 | Stand pose on a stand; then conservative walk in a sling |
 | See | Pi 5 + AI HAT+ + Camera Module 3 | Logged detections at usable FPS with servos unpowered |
 | Hear | Pi CPU + USB mic | Spoken wake word changes a mode flag |
-| Safe | E-stop + fuse + serial failsafe | E-stop cuts 6 V before any gait; MCU sits if Pi serial dies |
+| Safe | E-stop + fuse + serial failsafe | E-stop cuts servo 5 V before any gait; MCU sits if Pi serial dies |
 
 ## This week (W0) — do these first
 
-1. Order every `recommended` row in [`bom/bom.csv`](../../bom/bom.csv) that you do not already own: Camera Module 3, USB mic, ESP32-S3 N16R8, I2C level shifter, BNO055, ACS712 30A, 6 V 20–30 A BEC, fuse + e-stop, USB cable, CSI ribbon if needed, cooler / A2 SD / 27W PSU if missing.
+1. Order every `recommended` row in [`bom/bom.csv`](../../bom/bom.csv) that you do not already own: Camera Module 3, USB mic, ESP32-S3 N16R8, I2C level shifter, BNO055, ACS712 30A, fuse + e-stop, ATX 5 V distribution kit, USB cable, CSI ribbon if needed, cooler / A2 SD / 27W PSU if missing. **Do not order the Hobbywing UBEC this week.**
 2. Do **not** buy ST3215/clones, DIY ₹1,200 joints, or a Teensy.
-3. Stage a **servo-only** bench PSU or the new BEC. Never power MG995 from Uno 5 V or Pi 5 V.
+3. Stage the **ATX** as a **servo-only** brick (5 V red, fused). Never power MG995 from Uno 5 V or Pi 5 V. Never feed the Pi from ATX 5 V.
 4. Leave Phase 0 docs as the source of truth; when Phase 1 starts, put the channel map in `/hardware` and sketches in `/firmware` — not in `docs/`.
 
 ## Weekly actions
 
 ### Phase 1 — motion bench (owned parts)
 
-- Wire 1–2 MG995 to PCA9685 V+ from **external** 6 V; logic from USB.
+- Wire 1–2 MG995 to a fused **ATX 5 V** bus; PCA9685 PWM only; logic from USB.
 - Document channels 0–11 (FR/FL/RR/RL coxa–femur–tibia) in `hardware/`.
 - Safe PWM sweep; prove e-stop or kill switch on the servo rail.
 - Keep the Uno as a jig. Do not start gait/IK on the Uno as the production path.
