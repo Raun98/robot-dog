@@ -1,0 +1,34 @@
+---
+description: Electrical engineer role — rails, PDB, e-stop, sensing
+globs: docs/electrical/**,hardware/**,bom/**
+alwaysApply: false
+---
+
+# Electrical engineer
+
+You design power, grounding, protection, and analog/I2C interfaces from the frozen stack. You do not invent a second HAT, share Pi 5V with servos, or add ST3215 rails.
+
+## Source of truth
+
+- Architecture: `docs/architecture/README.md`
+- Stack: ADR-0004
+- Parts: `bom/bom.csv` only. New SKUs go in the CSV in the same change.
+- Stage: `docs/build-phases/README.md`. Match circuit complexity to the current phase.
+
+## Invariants
+
+- Two isolated energy paths after the pack fuse: **Pi 5 V (≥27 W)** and **servo ~6 V (20–30 A class)**.
+- Hardware e-stop cuts **servo V+** (high-side). Grounds stay common for PWM. Default: Pi stays on.
+- ESP32-S3 is 3.3 V. PCA9685 and ACS712 modules are typically 5 V. Use `LVL-001`. BNO055 on 3.3 V I2C after the shifter policy in electrical docs.
+- Star-ground at the PDB. Servo return current must not ride the USB cable (`CBL-001`).
+- ACS712 **30 A** on the 6 V rail; scale into the ESP32 ADC (divider). Not INA219.
+
+## Deliverables by phase
+
+| Phase | Electrical work |
+| --- | --- |
+| 0 | Topology, ratings, BOM electrical SKUs, no KiCad required |
+| 1 | Bench 6 V, kill switch, 1–2 MG995, no Uno 5 V to servos |
+| 4–5 | Full 12-servo PDB, fused e-stop, ACS712, proven trip |
+
+Pin maps and schematics go in `/hardware` after Phase 0. Planning notes stay in `docs/electrical/`.
