@@ -47,7 +47,7 @@ Keep ST3215 `rejected`. Do not buy twelve 2 kg·cm bus micros.
 | Teensy 4.1 | **3,400–4,000** ([Robocraze](https://robocraze.com/products/teensy-4-1-development-board)) | Optional later for analog pots; skip now |
 | Arduino Uno | owned | Bring-up only |
 
-Frozen incremental electronics: **ESP32-S3 + BNO055 + ACS712 30A + level shifter ≈ ₹2,200–3,500**, plus stall-rated BEC if needed. Camera Module 3 ≈ ₹3,050–3,200 extra.
+Frozen incremental electronics: **ESP32-S3 + BNO055 + ACS712 30A + level shifter ≈ ₹2,200–3,500**, plus ATX harness / e-stop. Camera Module 3 ≈ ₹3,050–3,200 extra. Hobbywing 6 V BEC is **deferred** (owned ATX 5 V for bench).
 
 ## Current sense
 
@@ -59,7 +59,7 @@ Stock **INA219** boards are often **±3.2 A** — too small for twelve MG995s. P
 
 | Scenario | What you still buy | ≈ ₹ |
 | --- | --- | --- |
-| **A. Frozen walk electronics** | ESP32-S3, BNO055, ACS712 30A, level shifter, e-stop, USB, 6 V 20–30 A BEC if needed | **2,500–5,500** |
+| **A. Frozen walk electronics** | ESP32-S3, BNO055, ACS712 30A, level shifter, e-stop, USB, ATX harness (no UBEC) | **2,500–4,500** |
 | **A + see/hear** | A + Camera Module 3 + USB mic + cooler/SD/PSU if missing | **+3,500–6,000** |
 | **C. ST3215 / clones** | 12× ~₹2k | **~₹24,000** — **rejected** |
 | **D. DIY print @ ₹1.2k × 12** | 12× N20-class | **rejected** for walking |
@@ -89,10 +89,12 @@ v1 plan: **scenario A + Camera Module 3**. Not C, not D.
 | IMU-001 | BNO055 | 1 | recommended | 1,500–2,000 | 1,500–2,000 | Frozen body IMU |
 | IMU-002 | MPU-6050 GY-521 | 1 | optional | 150–200 | 150–200 | Spare |
 | CUR-001 | ACS712 30 A | 1 | recommended | 80–235 | 80–235 | Not INA219 3.2 A |
-| PWR-001 | 6 V 20–30 A BEC | 1 | recommended | 400–1,200 | 400–1,200 | Buy if bench PSU is weak |
-| PWR-002 | LiPo 3S class | 1 | deferred | 1,500–3,000 | 1,500–3,000 | |
+| PWR-001 | 6 V 20–30 A BEC | 1 | deferred | 6,000–6,500 | — | Hobbywing 30606000; not this cart (ATX 5 V) |
+| PWR-002 | LiPo 3S class | 1 | deferred | 1,500–3,000 | 1,500–3,000 | With PWR-001 later |
 | PWR-003 | 5 V 5 A+ buck | 1 | deferred | 400–1,200 | 400–1,200 | |
-| PWR-004 | Fuse + e-stop | 1 | recommended | 100–400 | 100–400 | |
+| PWR-004 | Fuse + e-stop | 1 | recommended | 400–900 | 400–900 | ATX 5 V cut; 12 V coil from ATX yellow |
+| PWR-005 | ATX PC PSU | 1 | owned | — | — | Servo brick; not Pi |
+| PWR-006 | ATX 5 V distribution | 1 | recommended | 200–500 | 200–500 | Fuse holder, 12–14 AWG, XT60/barrier |
 | CBL-001 | USB Pi–MCU | 1 | recommended | 50–200 | 50–200 | |
 | CBL-002 | CSI ribbon | 1 | recommended | 100–400 | 100–400 | If not in camera kit |
 | MECH-001 | Print filament | 1 | deferred | 800–2,500 | 800–2,500 | PETG/ABS; design TBD |

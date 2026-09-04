@@ -20,7 +20,7 @@ India street prices: [`pricing-inr.md`](pricing-inr.md) and [`pricing-inr.csv`](
 
 ## Frozen vs rejected
 
-- **Walk:** 12× MG995 + PCA9685 + stall-rated 6 V BEC + ESP32-S3 + BNO055 + ACS712 30A + e-stop.
+- **Walk:** 12× MG995 + PCA9685 + ESP32-S3 + BNO055 + ACS712 30A + e-stop. **Tethered servo power:** owned ATX 5 V. **6 V BEC + pack:** deferred.
 - **See/hear:** official Camera Module 3 + USB mic. Cooler + 27W PSU if missing.
 - **Rejected:** ST3215/STS3215 **and clones** (~₹2k each). DIY printed joints at ₹1,200. Teensy not required.
-- **Pay extra now (upgradeability):** Camera Module 3 (Hailo CSI), BNO055 (body fusion without joint encoders), real 20–30 A 6 V BEC, official-class Pi PSU/cooler, ESP32-S3 with native USB (not Uno forever).
+- **Pay extra now (upgradeability):** Camera Module 3 (Hailo CSI), BNO055 (body fusion without joint encoders), official-class Pi PSU/cooler, ESP32-S3 with native USB (not Uno forever). Skip Hobbywing UBEC until mobile.
