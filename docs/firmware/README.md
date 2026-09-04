@@ -30,7 +30,8 @@ I2C: Uno is 5 V. If a 3.3 V MCU or the Pi drives the PCA9685, use a level shifte
 - Keep channel numbers in firmware config, not magic numbers in gait math.
 - Command from Pi: mode enum, vx/vy/yaw rate, optional pose.
 - Watchdog on serial: timeout → safe pose.
-- Candidates: ESP32-S3 or Teensy 4.1 still talking I2C to PCA9685.
+- Candidates: **ESP32-S3** (recommended). Teensy 4.1 optional. Still I2C to PCA9685.
+- IMU: MPU-6050 on the gait MCU (complementary filter).
 
 ## Later — bus servos (deferred)
 

@@ -30,8 +30,9 @@ The body is built by the project owner. Mechanical design may be released later;
 | Role | v1 (now) | Later, if MG995 walk fails |
 | --- | --- | --- |
 | Compute | Pi 5 8 GB + AI HAT+ | Same (fixed) |
-| Motion MCU | Uno for PWM bring-up; ESP32-S3 (or similar) for gait | Same MCU can move to a TTL bus adapter |
+| Motion MCU | Uno for PWM bring-up; **ESP32-S3** for gait (Teensy optional) | Same MCU can move to a TTL bus adapter |
 | Servo drive | PCA9685 PWM | TTL/UART bus (ST3215 / STS3215, same family) |
 | Actuators | 12× MG995 analog (owned) | Bus servos with position/current feedback |
+| Body IMU | MPU-6050 GY-521 | Optional BNO055/085 if needed |
 
 Details: [ADR-0002](../decisions/0002-motion-stack.md), [hardware](../hardware/README.md), [BOM](../../bom/README.md).

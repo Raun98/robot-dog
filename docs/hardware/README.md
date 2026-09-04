@@ -45,27 +45,30 @@ See [ADR-0002](../decisions/0002-motion-stack.md).
 | PCA9685 | 16-ch I2C PWM; **12 channels** for 12-DOF walk |
 | MG995 × 12 | v1 walking actuators; analog; no position feedback; high stall current |
 
-Use a **stall-rated** 5–6 V BEC for all twelve, not a tiny hobby BEC meant for one or two servos. Never power MG995s from the Uno 5 V pin.
+Use a **stall-rated** 5–6 V BEC for all twelve, not a tiny hobby BEC meant for one or two servos. Never power MG995s from the Uno 5 V pin. Sense pack/BEC current with **ACS712 20/30 A** (CUR-001), not a stock INA219 ±3.2 A module.
 
-A later ESP32-S3 (or similar) should talk to this **same PCA9685** over I2C (level shifter). That does not require new servos.
+**ESP32-S3** (MCU-002) should talk to this **same PCA9685** over I2C (level shifter). That does not require new servos. **Teensy 4.1** is optional.
+
+**IMU:** MPU-6050 GY-521 (IMU-001) on the gait MCU for body pitch/roll. Optional BNO055/085 (IMU-002) only if the MPU is too noisy.
 
 ## Motion — deferred (only if MG995 walk fails)
 
 | Item | Role |
 | --- | --- |
-| Waveshare **ST3215** / Feetech **STS3215** (same family) | TTL bus, encoder, current/temp; ~USD 17–22 each so twelve is ~USD 200–260+ |
+| Waveshare **ST3215** / Feetech **STS3215** (same family) | TTL bus, encoder, current/temp; India ~₹1,800–2,900 each so twelve is ~₹22k–35k |
 | Bus adapter | Replaces PCA9685 on that path |
-| IMU (e.g. ICM-42688 / BNO085 class) | Attitude for stand/walk (useful on v1 MCU too) |
 
 Confirm 7.4 V vs 12 V SKU before any purchase. Do not buy a set until v1 walking shows MG995s are the limiter.
+
+**DIY 3D-printed actuators (ACT-001)** are a **study**, not a buy: ₹1,200 all-in does not make a walkable hip/knee. See [diy-actuators](../research/diy-actuators.md).
 
 ## MCU comparison (short)
 
 | Board | Keep? | Why |
 | --- | --- | --- |
 | Arduino Uno | Bench only | 16 MHz, 2 KB SRAM; OK for PWM sweep, weak for gait + IMU |
-| ESP32-S3 | Recommended candidate | Gait + IMU while still driving PCA9685 |
-| Teensy 4.1 | Recommended candidate | Strong real-time; more cost |
+| ESP32-S3 | **Recommended** (~₹500–1,000) | Gait + MPU-6050 while still driving PCA9685 |
+| Teensy 4.1 | Optional (~₹3,400+) | Strong real-time; skip on budget |
 | Pi 5 alone | Not for servo loop | Linux jitter; HAT pin conflict |
 
 ## Mechanical-electrical interface

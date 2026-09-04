@@ -19,6 +19,7 @@ Battery pack --> fuse --> [buck 5V Pi] --> Pi 5 + AI HAT+
 USB: Pi <---> motion MCU (isolated logically; share ground with care)
 I2C: MCU --> (level shift if 3.3V MCU) --> PCA9685
 E-stop: cuts servo rail (hardware), MCU sees a pin and zeros PWM
+ACS712 20/30A: on servo BEC high side/return (isolated hall); divider if MCU is 3.3 V
 ```
 
 ## Grounding

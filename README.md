@@ -28,7 +28,7 @@ Human and AI contributors should start with [AGENTS.md](AGENTS.md).
 
 ## Owned vs recommended hardware
 
-**v1 walks on twelve owned MG995s** plus PCA9685 PWM ([ADR-0002](docs/decisions/0002-motion-stack.md)). ST3215 / STS3215 bus servos are the same product family and stay **deferred** until that walk is not good enough. A 32-bit MCU (ESP32-S3 candidate) may still replace the Uno for gait while keeping the same servos.
+**v1 walks on twelve owned MG995s** plus PCA9685 PWM ([ADR-0002](docs/decisions/0002-motion-stack.md)). ST3215 / STS3215 stay **deferred** (~₹22k–35k for twelve in India). A **ESP32-S3** may replace the Uno for gait while keeping the same servos; **MPU-6050** is the v1 IMU. DIY printed joints at ₹1,200 are not walkable ([diy-actuators](docs/research/diy-actuators.md)).
 
 Compute is **fixed**: Pi 5 8 GB + AI HAT+. License (open vs closed design) is **TBD** ([ADR-0003](docs/decisions/0003-license-tbd.md)).
 

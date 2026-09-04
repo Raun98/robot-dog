@@ -13,7 +13,7 @@ Working assumption until a new ADR says otherwise. Compute is fixed ([ADR-0001](
               [motion MCU] --> [PCA9685 + 12x MG995 (v1)]
                       ^
                       |
-              [IMU]   [e-stop]
+              [IMU MPU-6050]   [ACS712]   [e-stop]
 ```
 
 ## Process split
