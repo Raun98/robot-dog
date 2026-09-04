@@ -9,6 +9,7 @@ This file is the map for humans and AI working in this repository. Prefer it ove
 - **Compute (fixed):** Raspberry Pi 5 8 GB + official AI HAT+ (26 TOPS). ADR-0001.
 - **Motion (frozen):** 12× MG995 + PCA9685 + ESP32-S3 N16R8. ST3215/clones and DIY ₹1,200 joints are **rejected**. ADR-0002 + ADR-0004.
 - **Sensing (frozen buy):** official Camera Module 3; BNO055; ACS712 30A; USB mic. INR: `bom/pricing-inr.md`.
+- **Servo power (bench):** owned ATX 5 V (fused). Hobbywing 6 V UBEC + pack = deferred.
 - **License:** TBD. ADR-0003.
 - **BOM:** `bom/bom.csv` only. Status `rejected` means do not purchase without a new ADR.
 
