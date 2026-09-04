@@ -22,7 +22,7 @@ The torso must fit:
 
 Keep the pack low. Hailo + Pi are heat sources; do not bury them without vents or a duct to the cooler.
 
-Exact mm envelope is TBD after the production servo SKU is chosen (MG995 vs STS3215 bodies differ).
+Exact mm envelope: design around **MG995** bodies and horns for v1. ST3215/STS3215 is a later mechanical change only if those servos are purchased.
 
 ## CAD tool
 
@@ -30,14 +30,14 @@ TBD among FreeCAD (open), Fusion/Onshape (account-based). Pick in a later ADR wh
 
 ## Fabrication
 
-- Early legs: 3D-printed brackets around the **production** servo, not optimized around MG995 if those will be discarded.
+- Early legs: 3D-printed brackets around **MG995** (v1). Do not wait for bus-servo geometry.
 - Fasteners: consistent metric (M2/M3) called out in the BOM when hardware is chosen.
-- Servo horns: lock to the servo vendor’s spline; document in BOM notes.
+- Servo horns: MG995 25T-class spline; document if a pack differs.
 
 ## Cable routing
 
 - CSI ribbon: minimum bend radius, no pinch at hip yaw.
-- Bus servo chain: fewer wires than 12× PWM + power; still strain-relieve at each hip.
+- Twelve PWM + power leads to the PCA9685; strain-relieve at each hip. A bus chain is fewer wires only after a servo upgrade.
 - Service loop so a leg can be removed without unsoldering the Pi.
 
 ## Assembly stages

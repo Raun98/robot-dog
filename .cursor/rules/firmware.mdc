@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Firmware
 
-- Real-time gait, IMU, e-stop, and servo comms belong on the motion MCU, not the Uno as a long-term brain.
-- Uno + PCA9685 firmware is bring-up only (Phase 1).
-- Production: UART/USB command protocol from Pi, 50–100 Hz (or faster) servo loop, current/temp limits if the bus supports them.
-- Never command a walk gait without documented current limits and a hardware e-stop path.
+- Real-time gait, IMU, e-stop, and PCA9685 PWM belong on the motion MCU; Uno is Phase 1 bring-up only.
+- v1 servo interface is 12 PWM channels on the PCA9685, not a TTL bus.
+- UART/USB command protocol from Pi, 50–100 Hz (or faster) servo loop, conservative PWM ranges (no encoder current limits on MG995).
+- Never command a walk gait without a hardware e-stop path.

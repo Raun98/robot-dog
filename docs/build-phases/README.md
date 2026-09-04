@@ -11,7 +11,7 @@ Instruction set for humans and later AI sessions. Do not skip Phase 0 completene
 
 ## Phase 1 — Motion bench (owned parts)
 
-- Arduino Uno + PCA9685 + 1–2 MG995s, external BEC, e-stop or kill switch.
+- Arduino Uno + PCA9685 + 1–2 of the 12 MG995s, external BEC, e-stop or kill switch.
 - Channel map document in `/hardware` when written.
 - **Exit:** safe PWM sweep, no Uno-powered servos, numbered channels 0–11 reserved.
 
@@ -27,16 +27,16 @@ Instruction set for humans and later AI sessions. Do not skip Phase 0 completene
 
 ## Phase 4 — Mechanical prototype
 
-- CAD for production servo (or a clearly labeled MG995 mock that will be redesigned).
-- Single-leg then four-leg on a **stand**.
+- CAD for **MG995** legs (v1).
+- Single-leg then four-leg on a **stand**. High-current 6 V rail for twelve servos.
 - **Exit:** stand pose under MCU control; Pi serial connected; e-stop proven.
 
 ## Phase 5 — Integrated walk
 
-- Freeze serial protocol, current limits, sling/stand first walks, then floor.
+- Freeze serial protocol, conservative PWM, sling/stand first walks, then floor.
 - Perception may select modes (follow slowly) only after failsafe is trusted.
 - **Exit:** repeatable walk in a fenced area; BOM updated to what was actually built.
 
 ## Later (not scheduled)
 
-ROS 2, outdoor nav, battery optimization, license publication (ADR-0003), extra MCU features.
+ST3215/STS3215 only if MG995 walk is not good enough (new ADR). ROS 2, outdoor nav, battery optimization, license publication (ADR-0003).

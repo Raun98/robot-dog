@@ -4,10 +4,10 @@ This folder is the **only** parts list. Status values:
 
 | Status | Meaning |
 | --- | --- |
-| `owned` | Already on the bench; keep for learning even if not used on the walking dog |
-| `recommended` | Intended production (or strongly suggested) part |
+| `owned` | Already on the bench |
+| `recommended` | Buy or use for v1 (not already owned) |
 | `optional` | Nice to have for v1 |
-| `deferred` | Needed later; SKU not locked |
+| `deferred` | Later; do not buy until an ADR says so |
 
 Edit [`bom.csv`](bom.csv) for every add, qty, or status change. Architecture changes also need an ADR under `docs/decisions/`.
 
@@ -15,12 +15,13 @@ Edit [`bom.csv`](bom.csv) for every add, qty, or status change. Architecture cha
 
 `id,category,name,qty,status,role,notes`
 
-## Why not Uno + MG995 as the walking robot
+## v1 motion vs deferred bus servos
 
-- **Uno:** too little RAM/CPU for 12-DOF gait + IMU + telemetry; 5 V I2C vs Pi 3.3 V; AI HAT+ blocks stacking a PWM HAT on the Pi. Keep as Phase 1 jig ([ADR-0002](../docs/decisions/0002-motion-stack.md)).
-- **MG995:** analog, no position/current feedback, high stall current, poor long-term walking durability. Use for PWM/power practice only.
-- **PCA9685:** correct for analog PWM; unnecessary once TTL bus servos are chosen.
+- **MG995 × 12:** owned; **v1 walking actuators**. Analog, no feedback, high stall current — walk anyway, with a stall-rated BEC and e-stop ([ADR-0002](../docs/decisions/0002-motion-stack.md)).
+- **PCA9685:** owned; v1 PWM driver. Keep it until a bus-servo ADR drops it.
+- **Uno:** owned; Phase 1 jig. Prefer ESP32-S3 (or similar) for gait, still on PCA9685.
+- **ST3215 / STS3215:** same product family (Waveshare vs Feetech). **Deferred.** About USD 17–22 each (~USD 200–260+ for twelve). Buy only if MG995 walking is not good enough.
 
 ## Owned vs recommended (summary)
 
-Compute is owned/fixed (Pi 5 + AI HAT+). Motion production path is bus servos + 32-bit MCU (`recommended` rows). Camera, mic, battery pack SKUs are `recommended` or `deferred` until purchase.
+Compute is owned/fixed (Pi 5 + AI HAT+). v1 legs are the 12 MG995s. Camera, mic, high-current BEC, and a 32-bit MCU are `recommended`. Bus servos stay `deferred`.

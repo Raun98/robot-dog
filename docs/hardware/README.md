@@ -35,37 +35,39 @@ Pi 5 has **no analog audio jack**.
 - **Speak (optional v1):** USB speaker or I2S DAC + small speaker.
 - Keep USB devices on a powered hub if the Pi port current is tight once Wi-Fi + Hailo + camera are running.
 
-## Motion — bench (owned)
+## Motion — v1 (owned, walk on these)
 
 See [ADR-0002](../decisions/0002-motion-stack.md).
 
 | Item | Role |
 | --- | --- |
-| Arduino Uno | PWM/I2C test MCU; 5 V logic; not the production gait CPU |
-| PCA9685 | 16-ch I2C PWM; 12 channels used for a 12-DOF mock; needs 3.3/5 V I2C care if ever talked to from the Pi |
-| MG995 | Analog metal-gear servo; no position feedback; stall current high |
+| Arduino Uno | PWM/I2C bring-up MCU; 5 V logic; not the long-term gait CPU |
+| PCA9685 | 16-ch I2C PWM; **12 channels** for 12-DOF walk |
+| MG995 × 12 | v1 walking actuators; analog; no position feedback; high stall current |
 
-Use this stack to learn pulse widths, BEC wiring, and horn fit. Do not design the walking current budget around twelve stalled MG995s on one cheap BEC.
+Use a **stall-rated** 5–6 V BEC for all twelve, not a tiny hobby BEC meant for one or two servos. Never power MG995s from the Uno 5 V pin.
 
-## Motion — production (recommended)
+A later ESP32-S3 (or similar) should talk to this **same PCA9685** over I2C (level shifter). That does not require new servos.
+
+## Motion — deferred (only if MG995 walk fails)
 
 | Item | Role |
 | --- | --- |
-| STS3215-class TTL bus servo | Daisy-chain, encoder, current/temp; 12 units for 12 DOF + spares |
-| Bus adapter / ESP32-S3 / Teensy 4.1 | Real-time loop + IMU |
-| IMU (e.g. ICM-42688 / BNO085 class) | Attitude for stand/walk |
+| Waveshare **ST3215** / Feetech **STS3215** (same family) | TTL bus, encoder, current/temp; ~USD 17–22 each so twelve is ~USD 200–260+ |
+| Bus adapter | Replaces PCA9685 on that path |
+| IMU (e.g. ICM-42688 / BNO085 class) | Attitude for stand/walk (useful on v1 MCU too) |
 
-Bus servos drop the PCA9685. Confirm voltage SKU (7.4 V vs 12 V) before picking the battery pack.
+Confirm 7.4 V vs 12 V SKU before any purchase. Do not buy a set until v1 walking shows MG995s are the limiter.
 
 ## MCU comparison (short)
 
 | Board | Keep? | Why |
 | --- | --- | --- |
-| Arduino Uno | Bench only | 16 MHz, 2 KB SRAM, no native high-rate USB telemetry story for 12 smart servos |
-| ESP32-S3 | Recommended candidate | Cheap, USB-serial, enough CPU, Wi-Fi debug optional |
+| Arduino Uno | Bench only | 16 MHz, 2 KB SRAM; OK for PWM sweep, weak for gait + IMU |
+| ESP32-S3 | Recommended candidate | Gait + IMU while still driving PCA9685 |
 | Teensy 4.1 | Recommended candidate | Strong real-time; more cost |
 | Pi 5 alone | Not for servo loop | Linux jitter; HAT pin conflict |
 
 ## Mechanical-electrical interface
 
-Leave volume and airflow for: Pi 5 + HAT + cooler, battery, CSI ribbon, USB to MCU, and twelve servo cables (bus is fewer wires than PCA9685). Mass budget: see [design](../design/README.md).
+Leave volume and airflow for: Pi 5 + HAT + cooler, battery, CSI ribbon, USB to MCU, PCA9685, and twelve MG995 power/signal leads. Mass budget: see [design](../design/README.md).

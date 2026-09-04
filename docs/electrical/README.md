@@ -7,16 +7,18 @@ Separate the **logic/compute rail** from the **actuator rail**. Mixing them is t
 | Rail | Typical use | Notes |
 | --- | --- | --- |
 | Pi 5 V (5 V, high current) | Pi 5 + AI HAT+ + CSI camera + USB MCU | Official PSU class is 5 V / 5 A when tethered. On battery, use a dedicated buck rated with headroom for Hailo + Wi-Fi bursts (plan **≥ 27 W** for compute alone before servos). |
-| Servo / bus | MG995 ~6 V **or** STS3215 7.4 V / 12 V SKU | Size for **stall**, not no-load. Twelve analog servos can demand tens of amps if they stall together. Bus servos still need a pack that can pulse. |
+| Servo (v1) | MG995 ~6 V, twelve in parallel on one rail | Size for **stall**, not no-load. Twelve analog servos can demand tens of amps if they stall together. |
+| Servo (deferred bus) | ST3215/STS3215 7.4 V or 12 V SKU | Only if MG995 walk fails; then re-do the pack. |
 | MCU 3.3/5 V | From USB (Pi) or a small regulator from the pack | Do not power the Uno's barrel from the servo stall rail without regulation. |
 
-## Topology (production intent)
+## Topology (v1)
 
 ```text
 Battery pack --> fuse --> [buck 5V Pi] --> Pi 5 + AI HAT+
-                 \--> [BEC or direct for bus voltage] --> servos
+                 \--> [high-current 5-6V BEC] --> 12x MG995 via PCA9685 V+
 USB: Pi <---> motion MCU (isolated logically; share ground with care)
-E-stop: cuts servo rail (hardware), MCU sees a pin and zeros commands
+I2C: MCU --> (level shift if 3.3V MCU) --> PCA9685
+E-stop: cuts servo rail (hardware), MCU sees a pin and zeros PWM
 ```
 
 ## Grounding
@@ -32,10 +34,10 @@ E-stop: cuts servo rail (hardware), MCU sees a pin and zeros commands
 
 ## Bench (Phase 1)
 
-- External 5–6 V supply or a UBEC **only** for 1–2 MG995s plus Uno.
+- External 5–6 V supply or a **high-current** UBEC for the MG995 rail (Phase 1: 1–2 servos; Phase 4–5: all twelve).
 - Never feed MG995 stall current from the Uno 5 V pin.
 - Logic 5 V Uno vs 3.3 V Pi: if I2C is ever used from the Pi, use a level shifter. USB-serial to Uno avoids that for Phase 1.
 
 ## Battery (deferred SKU)
 
-Hold the exact pack until servo voltage is locked (ADR follow-up). Candidates: 2S LiPo for 7.4 V bus servos; 3S with a buck for mixed 5 V + 8.4 V. Capacity is a runtime trade against mass in the torso.
+Hold the exact pack until the v1 6 V rail is sized. A 2S/3S pack plus a beefy 6 V BEC is the MG995 path. Do not buy a 7.4 V / 12 V bus-servo pack until ST3215 is actually chosen.

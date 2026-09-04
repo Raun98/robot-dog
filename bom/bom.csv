@@ -7,13 +7,13 @@ COMP-005,compute,27W USB-C PSU 5V 5A,1,recommended,Tethered Pi power,Not for ser
 CAM-001,sensing,Raspberry Pi Camera Module 3,1,recommended,CSI vision,CAM1; Hailo rpicam path
 AUD-001,sensing,USB microphone,1,recommended,Hearing,Pi 5 has no analog jack
 AUD-002,sensing,USB speaker or I2S DAC + speaker,1,optional,TTS / cues,v1 optional
-MCU-001,motion,Arduino Uno,1,owned,Phase 1 bench MCU,Not production gait CPU
-MCU-002,motion,ESP32-S3 or Teensy 4.1,1,recommended,Production motion MCU,Lock SKU in follow-up ADR; USB-serial to Pi
-DRV-001,motion,PCA9685 16-ch PWM driver,1,owned,Phase 1 analog servo PWM,Not needed for TTL bus servos
-SRV-001,motion,MG995 analog servo,12,owned,Bench actuators,Qty may be less on hand; walking dog should not rely on these
-SRV-002,motion,STS3215-class TTL bus servo,12,recommended,Production 12-DOF,Confirm 7.4V vs 12V SKU; buy spares later
+MCU-001,motion,Arduino Uno,1,owned,Phase 1 PWM bring-up MCU,Not the long-term gait CPU
+MCU-002,motion,ESP32-S3 or Teensy 4.1,1,recommended,v1 gait MCU on same PCA9685,USB-serial to Pi; I2C to PCA9685 with level shift
+DRV-001,motion,PCA9685 16-ch PWM driver,1,owned,v1 12-ch PWM,Keep until a bus-servo ADR
+SRV-001,motion,MG995 analog servo,12,owned,v1 walking actuators,All 12 owned; analog no feedback; stall-rated BEC required
+SRV-002,motion,ST3215 / STS3215 TTL bus servo,12,deferred,Upgrade only if MG995 walk fails,Same family (Waveshare ST3215 = Feetech STS3215); ~USD 17-22 each so 12 is ~USD 200-260+
 IMU-001,sensing,IMU breakout (ICM-42688 or BNO085 class),1,recommended,Attitude on MCU,Exact SKU deferred
-PWR-001,electrical,External 5-6V BEC or bench PSU,1,owned,Phase 1 servo rail,Never power MG995 from Uno 5V pin
+PWR-001,electrical,External 5-6V BEC or bench PSU,1,owned,v1 servo rail,Never power MG995 from Uno 5V; Phase 4-5 needs stall-rated current for 12 servos
 PWR-002,electrical,LiPo or Li-ion pack,1,deferred,Untethered energy,Wait for servo voltage ADR
 PWR-003,electrical,5V buck for Pi from pack,1,deferred,Mobile compute rail,>=27W class headroom for Pi+HAT
 PWR-004,electrical,Fuse or breaker + e-stop on servo rail,1,recommended,Safety,Hardware cut of actuator power

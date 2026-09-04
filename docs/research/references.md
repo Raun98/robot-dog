@@ -18,8 +18,8 @@ Official and community links used during Phase 0. These are citations, not a lic
 
 ## Actuators
 
-- Feetech / Waveshare STS3215 class bus servos (encoder, TTL daisy-chain)
-- MG995 analog hobby servo — bench only in this project
+- MG995 analog hobby servo — v1 walking actuators (12 owned)
+- Waveshare ST3215 = Feetech STS3215 TTL bus servos — deferred; same family, ~USD 17–22 each
 
 ## Audio on Pi 5
 

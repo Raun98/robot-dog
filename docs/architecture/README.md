@@ -10,7 +10,7 @@ Working assumption until a new ADR says otherwise. Compute is fixed ([ADR-0001](
                       |
                       | USB-serial or UART (commands + telemetry)
                       v
-              [motion MCU] --> [bus servos or Phase-1 PCA9685]
+              [motion MCU] --> [PCA9685 + 12x MG995 (v1)]
                       ^
                       |
               [IMU]   [e-stop]
@@ -24,13 +24,13 @@ Working assumption until a new ADR says otherwise. Compute is fixed ([ADR-0001](
 | Audio | Pi CPU first | Wake word continuous; STT on demand | Hear commands |
 | Behavior | Pi 5 | 10–20 Hz | Map perception + commands to gait modes |
 | Gait + IK | Motion MCU | 50–100+ Hz | Joint trajectories, IMU stabilize |
-| Servos | Bus or PWM | bus packet rate / 50 Hz PWM | Track joint setpoints |
+| Servos | PCA9685 PWM (v1) | ~50 Hz PWM | Track joint setpoints (open loop) |
 
 Do **not** bit-bang twelve analog servos from Python on the Pi in production. Do **not** run Hailo vision on the Uno.
 
 ## Interfaces
 
-- **Pi → MCU:** framed serial (length + CRC). Messages: mode (stand/walk/estop), body velocity, optional joint overrides. Telemetry back: joint positions (if bus servos), current, MCU faults.
+- **Pi → MCU:** framed serial (length + CRC). Messages: mode (stand/walk/estop), body velocity, optional joint overrides. Telemetry back: MCU faults; joint positions only if bus servos are added later.
 - **Camera:** CSI (CAM1) into Pi 5, `rpicam` / libcamera into Hailo post-process. USB camera only if CSI routing fails.
 - **Audio:** USB mic or I2S MEMS + USB/I2S DAC. Pi 5 has no analog headphone jack.
 - **HAT stack:** AI HAT+ owns PCIe and sits on the 40-pin header. Extra boards are **not** stacked HATs; they are USB or flying-lead GPIO.
@@ -41,7 +41,7 @@ Do **not** bit-bang twelve analog servos from Python on the Pi in production. Do
 | --- | --- |
 | Hailo/PCIe drop | Vision disables; robot stands or sits; log and require reboot |
 | Serial to MCU lost | MCU holds last safe pose or damps to sit; no walk |
-| Servo overcurrent / overtemp | MCU drops that joint torque; e-stop if multiple legs |
+| Servo stall / binding (MG995 has no current telemetry) | Conservative PWM; hardware e-stop; later bus servos can report current |
 | Pi brownout | Hardware undervoltage; servos must not share the Pi 5V rail |
 | E-stop pressed | Immediate PWM/bus disable; software cannot override without reset |
 

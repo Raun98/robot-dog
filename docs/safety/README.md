@@ -17,7 +17,7 @@ A 12-DOF metal-gear dog can pinch fingers, dump a LiPo, and walk into furniture.
 
 ## Firmware / software
 
-- **Never command a walk gait without current limits** (bus servos) or a conservative PWM range (bench).
+- **Never command a walk gait without a conservative PWM range** (MG995 has no current telemetry) and a hardware e-stop. Bus-servo current limits apply only if that upgrade happens.
 - Watchdog: if Pi serial dies, MCU must sit/damp, not continue the last walk command.
 - Disable torque on overtemp / overcurrent when the protocol supports it.
 - Do not auto-start walk on boot.

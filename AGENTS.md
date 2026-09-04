@@ -6,7 +6,7 @@ This file is the map for humans and AI working in this repository. Prefer it ove
 
 - **Phase:** planning (Phase 0). Do not invent shipped CAD, firmware, or a walking gait.
 - **Compute (fixed):** Raspberry Pi 5 8 GB + official AI HAT+ (26 TOPS / Hailo-8L). See `docs/decisions/0001-compute.md`.
-- **Motion:** Uno + PCA9685 + MG995 is a **bench stack**, not the production walk stack. See `docs/decisions/0002-motion-stack.md`.
+- **Motion:** v1 walks on 12× MG995 + PCA9685. Uno is bring-up only; prefer a 32-bit MCU on the same PWM board. ST3215/STS3215 (same family) is deferred. See `docs/decisions/0002-motion-stack.md`.
 - **License:** open vs closed is TBD. See `docs/decisions/0003-license-tbd.md`.
 - **BOM:** `bom/bom.csv` is the only parts list. Never add a part only in a random markdown file.
 
@@ -19,7 +19,7 @@ This file is the map for humans and AI working in this repository. Prefer it ove
 
 ## Rules
 
-1. Distinguish **owned prototype parts** vs **recommended production parts**. Do not treat MG995 as the walking motors without a new ADR.
+1. Distinguish **owned v1 parts** vs **recommended** vs **deferred**. v1 walking motors are the 12 MG995s. Do not add a bus-servo purchase without a new ADR.
 2. If you change architecture, write or update an ADR under `docs/decisions/` in the same change.
 3. The AI HAT+ occupies the Pi 5 HAT/PCIe stack. Do not plan a second PWM HAT on the same 40-pin header.
 4. Keep Pi 5V and servo power rails separate. See `docs/electrical/`.

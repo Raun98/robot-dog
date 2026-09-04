@@ -14,7 +14,7 @@ The body is built by the project owner. Mechanical design may be released later;
 
 - Brain: **Raspberry Pi 5, 8 GB**, plus **official AI HAT+ (26 TOPS)**.
 - Extra MCU allowed when the Pi cannot meet real-time servo timing or HAT stacking blocks a PWM board.
-- Parts already owned (Uno, PCA9685, MG995, etc.) may be used for learning and may be **replaced** if they cannot walk a dog safely.
+- Parts already owned (Uno, PCA9685, **12× MG995**) are the **v1 walk stack** for actuators/PWM. Replace MG995s only if walking is not good enough ([ADR-0002](../decisions/0002-motion-stack.md)).
 - Work happens in this git repo; planning docs are the instructions for later AI sessions (`AGENTS.md`).
 
 ## Non-goals for v1
@@ -25,13 +25,13 @@ The body is built by the project owner. Mechanical design may be released later;
 - ROS 2 as a hard requirement (it is optional later).
 - Untethered all-day runtime (battery is a later optimization).
 
-## Owned hardware vs production path
+## Owned hardware vs later upgrade
 
-| Role | On the bench now | Intended for a walking dog |
+| Role | v1 (now) | Later, if MG995 walk fails |
 | --- | --- | --- |
 | Compute | Pi 5 8 GB + AI HAT+ | Same (fixed) |
-| Motion MCU | Arduino Uno | ESP32-S3, Teensy 4.1, or bus-servo adapter |
-| Servo drive | PCA9685 PWM | TTL/UART bus (e.g. STS3215 class) |
-| Actuators | MG995 analog | Smart bus servos with position/current feedback |
+| Motion MCU | Uno for PWM bring-up; ESP32-S3 (or similar) for gait | Same MCU can move to a TTL bus adapter |
+| Servo drive | PCA9685 PWM | TTL/UART bus (ST3215 / STS3215, same family) |
+| Actuators | 12× MG995 analog (owned) | Bus servos with position/current feedback |
 
 Details: [ADR-0002](../decisions/0002-motion-stack.md), [hardware](../hardware/README.md), [BOM](../../bom/README.md).

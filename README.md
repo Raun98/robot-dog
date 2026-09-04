@@ -28,7 +28,7 @@ Human and AI contributors should start with [AGENTS.md](AGENTS.md).
 
 ## Owned vs recommended hardware
 
-Parts already on the bench (Arduino Uno, PCA9685, MG995, and similar) are **prototype / learning** gear. They are listed in the BOM with status `owned`. A walkable dog is expected to use **bus servos** and a stronger motion MCU; that path is `recommended` in the BOM and recorded in [ADR-0002](docs/decisions/0002-motion-stack.md).
+**v1 walks on twelve owned MG995s** plus PCA9685 PWM ([ADR-0002](docs/decisions/0002-motion-stack.md)). ST3215 / STS3215 bus servos are the same product family and stay **deferred** until that walk is not good enough. A 32-bit MCU (ESP32-S3 candidate) may still replace the Uno for gait while keeping the same servos.
 
 Compute is **fixed**: Pi 5 8 GB + AI HAT+. License (open vs closed design) is **TBD** ([ADR-0003](docs/decisions/0003-license-tbd.md)).
 
